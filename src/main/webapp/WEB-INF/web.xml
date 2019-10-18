@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0" metadata-complete="true">
+    <display-name>Archetype Created Web Application</display-name>
+
+<!--    <context-param>-->
+<!--        <param-name>contextConfigLocation</param-name>-->
+<!--        <param-value>classpath:spring/spring-*.xml</param-value>-->
+<!--    </context-param>-->
+
+<!--    &lt;!&ndash;②负责启动spring容器的监听器，它将使用①处的上下文参数获得spring配置文件地址&ndash;&gt;-->
+<!--    <listener>-->
+<!--        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+<!--    </listener>-->
+    <!--    <context-param>-->
+<!--        <param-name/>-->
+<!--        <param-value/>-->
+<!--    </context-param>-->
+
+    <!--    可以设定多个<welcome-file>xxxx.html/xxxx.jsp</welcome-file>，当输入域名时，如果第一行的首页没有，就进入第二个-->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>spring-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring/spring-*.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>spring-dispatcher</servlet-name>
+<!--        默认匹配所有的请求-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>
