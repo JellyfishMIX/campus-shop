@@ -6,6 +6,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 配置spring和junit整合，junit启动时加载springIOC容器
+ * 因为spring容器配置在src/main/resources/spring中，src/test无法直接获取，因此使用BaseTest引入测试所需的spring配置链接
  */
 // 告诉Spring使用SpringJUnit4ClassRunner这个类来跑单元测试
 @RunWith(SpringJUnit4ClassRunner.class)

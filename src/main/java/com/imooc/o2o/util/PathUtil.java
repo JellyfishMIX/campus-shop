@@ -18,7 +18,12 @@ public class PathUtil {
         return basePath;
     }
 
-    // 根据业务需求，获取项目图片子路径
+    /**
+     * 根据业务需求，获取项目图片子路径
+     * 得到的是"targetPath"，当前店铺所在的图片储存目录，仅为当前店铺服务。
+     * @param shopId
+     * @return
+     */
     public static String getShopImgPath(long shopId) {
         String imagePath = "/upload/item/shop/" + shopId + "/";
         return imagePath.replace("/", separator);

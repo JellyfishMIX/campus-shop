@@ -35,10 +35,9 @@ public class ShopDaoTest extends BaseTest {
         shop.setShopDesc("test");
         shop.setShopAddr("test");
         shop.setPhone("test");
-        shop.setPhone("test");
         shop.setShopImg("test");
         shop.setCreateTime(new Date());
-        shop.setEnableStatus(1);
+        shop.setEnableStatus(0);
         shop.setAdvice("审核中");
 
         int effectedNum = shopDao.insertShop(shop);
