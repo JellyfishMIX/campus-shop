@@ -27,9 +27,6 @@ public class ShopServiceImpl implements ShopService {
         if (shop == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
         }
-        if (shop.getShopId() == null) {
-            return new ShopExecution(ShopStateEnum.NULL_SHOPID);
-        }
         // if还可以继续添加，未完待续...
         try {
             // 给店铺信息赋初始值
@@ -44,7 +41,7 @@ public class ShopServiceImpl implements ShopService {
                 if (shopImg != null) {
                     // 存储图片
                     try {
-                        addShopImg(shop, shopImg);  // .addShopImg()中有一个.shop.setShopImg方法，执行后把当前对象shop中的图片地址shopImg更新
+                        this.addShopImg(shop, shopImg);  // .addShopImg()中有一个.shop.setShopImg方法，执行后把当前对象shop中的图片地址shopImg更新
                     } catch (Exception e) {
                         throw new ShopOperationException("addShopImg error: " + e.getMessage());
                     }
@@ -70,6 +67,7 @@ public class ShopServiceImpl implements ShopService {
         // 此方法内部会生成一个随机的文件名，realFileName.extension = "随机文件名"+"扩展名" 再与targetPath结合起来，得到 targetPath/realFileName。生成当前图片项目中的"绝对路径"，此"项目中绝对路径"并不等于"硬件设备储存中的根路径"
         String shopImgRelativePath = ImageUtil.generateThumbnail(shopImg, targetPath);  // 将"图片文件夹中的绝对路径"返回
 
-        shop.setShopImg(shopImgRelativePath);   // 把当前对象shop中的图片地址shopImg更新
+        System.out.println(shopImgRelativePath);
+        shop.setShopImg(shopImgRelativePath);   // 把当前对象shop中的图片地址shopImg更新，用于更新数据库
     }
 }

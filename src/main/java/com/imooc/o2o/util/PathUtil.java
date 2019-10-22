@@ -10,9 +10,9 @@ public class PathUtil {
         String basePath = "";
 
         if (os.toLowerCase().startsWith("win")) {
-            basePath = "D:/projectdev/java_image/";
+            basePath = "D:/projectdev/java_image/o2o";
         } else {
-            basePath = "/Users/qianshijie/Programming/Back-End/Java/Images";
+            basePath = "/Users/qianshijie/Programming/Back-End/Java/Images/o2o";
         }
         basePath = basePath.replace("/", separator);
         return basePath;

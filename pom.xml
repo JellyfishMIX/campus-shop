@@ -103,7 +103,7 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
-        <!--解析json-->
+        <!--解析json。将实体类转换成json，或将json转换成实体类-->
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -154,7 +154,6 @@
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
         </dependency>
-
     </dependencies>
 
     <build>

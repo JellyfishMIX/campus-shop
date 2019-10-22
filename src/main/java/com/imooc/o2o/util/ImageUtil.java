@@ -105,7 +105,7 @@ public class ImageUtil {
     }
 
     /**
-     * 测试时所写所用，不重要。可以给一张小黄人图片加水印
+     * 测试时所写所用，不重要，可忽略。可以给一张小黄人图片加水印
      * @param args
      * @throws IOException
      */
