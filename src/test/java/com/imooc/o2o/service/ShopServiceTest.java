@@ -9,6 +9,7 @@ import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.entity.ShopCategory;
 import com.imooc.o2o.enums.ShopStateEnum;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,6 +23,7 @@ public class ShopServiceTest extends BaseTest {
     // private ShopDao shopDao;
 
     @Test
+    @Ignore
     public void testAddShop() {
         Shop shop = new Shop();
         PersonInfo owner = new PersonInfo();

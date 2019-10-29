@@ -72,7 +72,7 @@ public class ImageUtil {
      *
      * @return
      */
-    private static String getRandomFileName() {
+    public static String getRandomFileName() {
         int randomNum = random.nextInt(89999) + 10000; // 获取随机的五位数
         String nowTimeStr = simpleDateFormat.format(new Date());    // 当前时间戳
         return nowTimeStr + randomNum;
@@ -109,11 +109,11 @@ public class ImageUtil {
      * @param args
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
-        // 加水印
-        Thumbnails.of(new File("/Users/qianshijie/Programming/Back-End/Java/Images/xiaohuangren.jpg"))
-                .size(600, 509)
-                .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water_mark.jpg")), 0.25f)
-                .outputQuality(0.8f).toFile("/Users/qianshijie/Programming/Back-End/Java/Images/xiaohuangrennew.jpg");
-    }
+    // public static void main(String[] args) throws IOException {
+    //     // 加水印
+    //     Thumbnails.of(new File("/Users/qianshijie/Programming/Back-End/Java/Images/xiaohuangren.jpg"))
+    //             .size(600, 509)
+    //             .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water_mark.jpg")), 0.25f)
+    //             .outputQuality(0.8f).toFile("/Users/qianshijie/Programming/Back-End/Java/Images/xiaohuangrennew.jpg");
+    // }
 }
