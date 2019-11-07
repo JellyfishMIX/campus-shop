@@ -58,8 +58,6 @@ public class ShopManagementController {
         return modelMap;
     }
 
-    @RequestMapping(value = "registershop", method = RequestMethod.POST)
-    @ResponseBody
     /**
      * 当前端通过http协议访问服务器时，request中包含前端传来的http请求头中的所有参数信息
      * 返回值为Map型，返回一些必要的键值对结果
@@ -67,6 +65,8 @@ public class ShopManagementController {
      * 2.注册店铺
      * 3.返回结果，此步在1. 2. 中
      */
+    @RequestMapping(value = "registershop", method = RequestMethod.POST)
+    @ResponseBody
     private Map<String, Object> registerShop(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
 

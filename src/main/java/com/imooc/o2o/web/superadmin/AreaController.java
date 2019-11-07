@@ -30,10 +30,11 @@ public class AreaController {
         long startTime = System.currentTimeMillis();
 
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        List<Area> list = new ArrayList<Area>();
+        List<Area> list;
 
         try {
             list = areaService.getAreaList();
+            modelMap.put("success", true);
             modelMap.put("rows", list);
             modelMap.put("total", list.size());
         } catch (Exception e) {

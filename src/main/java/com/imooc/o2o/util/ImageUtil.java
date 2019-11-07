@@ -111,7 +111,7 @@ public class ImageUtil {
      */
     // public static void main(String[] args) throws IOException {
     //     // 加水印
-    //     Thumbnails.of(new File("/Users/qianshijie/Programming/Back-End/Java/Images/xiaohuangren.jpg"))
+    //     Thumbnails.of(new File("/Users/qianshijie/Programming/Backend/Java/Images/o2o/xiaohuangren.jpg"))
     //             .size(600, 509)
     //             .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water_mark.jpg")), 0.25f)
     //             .outputQuality(0.8f).toFile("/Users/qianshijie/Programming/Back-End/Java/Images/xiaohuangrennew.jpg");

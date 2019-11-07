@@ -12,7 +12,7 @@ public class PathUtil {
         if (os.toLowerCase().startsWith("win")) {
             basePath = "D:/projectdev/java_image/o2o/";
         } else {
-            basePath = "/Users/qianshijie/Programming/Back-End/Java/Images/o2o/";
+            basePath = "/Users/qianshijie/Programming/Backend/Java/Images/o2o/";
         }
         basePath = basePath.replace("/", separator);
         return basePath;
