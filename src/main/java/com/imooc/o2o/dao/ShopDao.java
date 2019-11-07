@@ -15,7 +15,7 @@ public interface ShopDao {
      * @param shopId
      * @return shop
      */
-    Shop queryByShopId(long shopId);
+    Shop getShopByShopId(long shopId);
 
     /**
      * 更新店铺信息

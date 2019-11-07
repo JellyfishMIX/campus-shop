@@ -20,6 +20,12 @@ public class ShopServiceImpl implements ShopService {
     @Autowired
     private ShopDao shopDao;
 
+    /**
+     * 新建店铺
+     * @param shop
+     * @param shopImg
+     * @return
+     */
     @Override
     @Transactional
     public ShopExecution addShop(Shop shop, File shopImg) {
@@ -58,6 +64,20 @@ public class ShopServiceImpl implements ShopService {
         return new ShopExecution(ShopStateEnum.CHECK, shop);    // 返回ShopStateEnum: 待审核，同时返回当前对象shop
     }
 
+    /**
+     * 通过shopId查询店铺
+     * @param shopId
+     * @return shop
+     */
+    public Shop getShopByShopId(long shopId) {
+        return shopDao.getShopByShopId(shopId);
+    }
+
+    /**
+     * 私有方法，增加店铺图片并存储
+     * @param shop
+     * @param shopImg
+     */
     private void addShopImg(Shop shop, File shopImg) {
         // 图片存储在项目的图片目录下，获取该shop图片的相对路径
         String targetPath = PathUtil.getShopImgPath(shop.getShopId());  // 初等相对路径，需进一步加工得到完整相对路径。为什么这一步获得的是初等相对路径？因为这一步得到的是"targetPath"，当前店铺所在的图片储存目录，仅为当前店铺服务。
