@@ -11,10 +11,10 @@ public interface ShopService {
     /**
      * 新建店铺
      * @param shop
-     * @param shopImg
+     * @param shopImgInputStream
      * @return
      */
-    ShopExecution addShop(Shop shop, File shopImg);
+    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName);
 
     /**
      * 通过店铺id获取店铺信息

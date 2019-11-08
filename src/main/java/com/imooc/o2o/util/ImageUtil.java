@@ -9,6 +9,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -43,13 +44,13 @@ public class ImageUtil {
      * 然后将"图片文件夹中的绝对路径"根据运行设备，生成运行设备中的"绝对路径"。在此"绝对路径"中储存图片。最后，将"图片文件夹中的绝对路径"返回，以供服务器储存记录
      * 此方法内部会生成一个随机的文件名，realFileName.extension = "随机文件名"+"扩展名" 再与targetPath结合起来，得到 targetPath/realFileName。生成当前图片项目中的"绝对路径"，此"项目中绝对路径"并不等于"硬件设备储存中的根路径"
      * relativePath会存到数据库table`shop_img`中的shop_img。根目录与运行设备有关，如果服务器迁移到别的运行设备，希望也可以正常运行。因此存入相对路径，在service层取相对路径时再加工为绝对路径
-     * @param thumbnail
+     * @param thumbnailInputStream
      * @param targetPath
      * @return
      */
-    public static String generateThumbnail(File thumbnail, String targetPath) {
+    public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetPath) {
         String realFileName = getRandomFileName();  // 获取文件随机名。因为用户上传图片的名字是随机的，可能会有很多重名，因此要取随即名。
-        String extension = getFileExtension(thumbnail); // 获取用户上传文件的扩展名
+        String extension = getFileExtension(fileName); // 获取用户上传文件的扩展名
         maikeDirPath(targetPath);   // 创建目标路径所涉及的目录。targetPath的项目目录可能不存在，先把路径创建出来
 
         String relativePath = targetPath + realFileName + extension;    // realFileName.extension = "随机文件名"+"扩展名" 再与targetPath结合起来，得到 targetPath/realFileName
@@ -57,7 +58,7 @@ public class ImageUtil {
         File dest = new File(PathUtil.getImgBasePath() + relativePath); // 把根路径与相对路径拼接起来。dest是destination的缩写
         logger.debug("current absolutePath is: " + PathUtil.getImgBasePath() + relativePath);   // debug中记录当前的绝对路径。一旦程序出错，就可以根据debug信息进行调试。同时还可以根据logger.error提示的信息，确认错误是什么
         try {
-            Thumbnails.of(thumbnail).size(200, 200)
+            Thumbnails.of(thumbnailInputStream).size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water_mark.jpg")), 0.25f)
                     .outputQuality(0.8f).toFile(dest);
         } catch (IOException e) {
@@ -81,12 +82,11 @@ public class ImageUtil {
     /**
      * 获取输入文件流的扩展名
      *
-     * @param thumbnail
+     * @param fileName
      * @return
      */
-    private static String getFileExtension(File thumbnail) {
-        String originalFileName = thumbnail.getName();
-        return originalFileName.substring(originalFileName.lastIndexOf("."));
+    private static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
     /**
