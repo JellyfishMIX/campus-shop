@@ -89,7 +89,7 @@ public class ShopManagementController {
         // 开始进行图片相关处理
         CommonsMultipartFile shopImg;    // Spring自带的CommonsMultipartFile
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext()); // 文件上传解析器，解析request里的文件信息。参数：从request中提取本次会话上传的文件内容
-        if (commonsMultipartResolver.isMultipart(request)) {    // 判断request中是否有上传的文件内容
+        if (commonsMultipartResolver.isMultipart(request)) {    // 判断request中是否有上传的文件内容(是否有流文件)
             MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;    // 强制类型转换
             shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
         } else {

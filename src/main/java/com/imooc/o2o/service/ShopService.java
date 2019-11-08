@@ -14,7 +14,7 @@ public interface ShopService {
      * @param shopImgInputStream
      * @return
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName);
+    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
 
     /**
      * 通过店铺id获取店铺信息
@@ -23,13 +23,13 @@ public interface ShopService {
      */
     Shop getShopByShopId(long shopId);
 
-    // /**
-    //  * 更改店铺信息
-    //  * @param shop
-    //  * @param shopImgInputStream
-    //  * @param fileName
-    //  * @return
-    //  * @throws ShopOperationException
-    //  */
-    // ShopExecution updateShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    /**
+     * 更改店铺信息
+     * @param shop
+     * @param shopImgInputStream
+     * @param fileName
+     * @return
+     * @throws ShopOperationException
+     */
+    ShopExecution updateShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
 }
