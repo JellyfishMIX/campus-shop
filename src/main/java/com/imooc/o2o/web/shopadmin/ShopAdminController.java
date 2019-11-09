@@ -4,8 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 跳转网址使用，非API接口
+ */
 @Controller
-@RequestMapping(value = "shopadmin", method = {RequestMethod.GET})
+@RequestMapping(value = "/shopadmin", method = {RequestMethod.GET})
 public class ShopAdminController {
     @RequestMapping(value = "/shopoperation")
     public String shopOperation() {

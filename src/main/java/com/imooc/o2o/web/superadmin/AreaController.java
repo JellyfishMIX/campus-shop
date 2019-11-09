@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/superadmin")
+@RequestMapping("/api/superadmin")
 public class AreaController {
     Logger logger = LoggerFactory.getLogger(AreaController.class);
 

@@ -53,7 +53,7 @@ public class ShopServiceTest extends BaseTest {
     }
 
     @Test
-    // @Ignore
+    @Ignore
     public void testUpdateShop() throws ShopOperationException, FileNotFoundException {
         Shop shop = new Shop();
         shop.setShopId(3L);
