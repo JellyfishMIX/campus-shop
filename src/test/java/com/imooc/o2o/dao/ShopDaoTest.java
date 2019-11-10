@@ -11,12 +11,14 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 
 public class ShopDaoTest extends BaseTest {
     @Autowired
     private ShopDao shopDao;
 
     @Test
+    @Ignore
     public void testQueryByShopId() {
         long shopId = 1;
         Shop shop = shopDao.getShopByShopId(shopId);
@@ -64,5 +66,18 @@ public class ShopDaoTest extends BaseTest {
 
         int effectedNum = shopDao.updateShop(shop);
         Assert.assertEquals(1, effectedNum);
+    }
+
+    @Test
+    @Ignore
+    public void testGetShopListAndCount() {
+        Shop shopCondition = new Shop();
+        PersonInfo owner = new PersonInfo();
+        owner.setUserId(1L);
+        shopCondition.setOwner(owner);
+        List<Shop> shopList = shopDao.getShopList(shopCondition, 0, 2);
+        int count = shopDao.getShopCount(shopCondition);
+        System.out.println("分页查询时，每页店铺个数：" + shopList.size());
+        System.out.println("店铺总个数：" + count);
     }
 }

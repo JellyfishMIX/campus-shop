@@ -132,6 +132,11 @@ public class ShopManagementController {
         }
     }
 
+    /**
+     * 通过店铺id获取店铺信息
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getshopbyshopid", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopByShopId(HttpServletRequest request) {
@@ -155,6 +160,11 @@ public class ShopManagementController {
         }
     }
 
+    /**
+     * 更改店铺信息
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/updateShop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> updateShop(HttpServletRequest request) {
