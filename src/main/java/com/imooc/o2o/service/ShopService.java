@@ -32,4 +32,13 @@ public interface ShopService {
      * @throws ShopOperationException
      */
     ShopExecution updateShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+
+    /**
+     * 根据shopCondition分页返回列表数据和店铺总数
+     * @param shopCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    public ShopExecution getShopListAndCount(Shop shopCondition, int pageIndex, int pageSize);
 }

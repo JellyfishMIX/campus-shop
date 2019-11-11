@@ -7,6 +7,7 @@ import com.imooc.o2o.enums.ShopStateEnum;
 import com.imooc.o2o.exceptions.ShopOperationException;
 import com.imooc.o2o.service.ShopService;
 import com.imooc.o2o.util.ImageUtil;
+import com.imooc.o2o.util.PageCalculator;
 import com.imooc.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ShopServiceImpl implements ShopService {
@@ -121,5 +123,27 @@ public class ShopServiceImpl implements ShopService {
 
         System.out.println(shopImgRelativePath);
         shop.setShopImg(shopImgRelativePath);   // 把当前对象shop中的图片地址shopImg更新，用于更新数据库
+    }
+
+    /**
+     * 根据shopCondition分页返回列表数据和店铺总数
+     * @param shopCondition
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    public ShopExecution getShopListAndCount(Shop shopCondition, int pageIndex, int pageSize) {
+        int rowIndex = PageCalculator.calculatorRowIndex(pageIndex, pageSize);
+        List<Shop> shopList = shopDao.getShopList(shopCondition, rowIndex, pageSize);
+        int count = shopDao.getShopCount(shopCondition);
+        ShopExecution shopExecution = new ShopExecution();
+        if (shopList != null) {
+            shopExecution.setShopList(shopList);
+            shopExecution.setCount(count);
+        } else {
+            shopExecution.setState(ShopStateEnum.INNER_ERROR.getState());
+        }
+
+        return shopExecution;
     }
 }

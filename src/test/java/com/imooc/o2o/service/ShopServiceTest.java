@@ -62,4 +62,15 @@ public class ShopServiceTest extends BaseTest {
         InputStream shopImgInputStream = new FileInputStream(shopImg);
         ShopExecution shopExecution = shopService.updateShop(shop, shopImgInputStream, "dabai.jpg");
     }
+
+    @Test
+    public void testGetShopListAndCount() {
+        Shop shopCondition = new Shop();
+        PersonInfo owner = new PersonInfo();
+        owner.setUserId(1L);
+        shopCondition.setOwner(owner);
+        ShopExecution shopExecution = shopService.getShopListAndCount(shopCondition, 1, 2);
+        System.out.println("店铺列当前页每页规格为：" + shopExecution.getShopList().size());
+        System.out.println("店铺总数为：" + shopExecution.getCount());
+    }
 }
