@@ -64,6 +64,7 @@ public class ShopServiceTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testGetShopListAndCount() {
         Shop shopCondition = new Shop();
         PersonInfo owner = new PersonInfo();
