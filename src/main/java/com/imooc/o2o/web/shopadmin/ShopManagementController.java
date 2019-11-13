@@ -222,6 +222,11 @@ public class ShopManagementController {
         }
     }
 
+    /**
+     * 根据shopCondition分页返回列表数据和店铺总数
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getshoplistandcount", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopListAndCount(HttpServletRequest request) {
@@ -245,6 +250,11 @@ public class ShopManagementController {
         return modelMap;
     }
 
+    /**
+     * 传入shopId，设置currentShop的shopId
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/getshopmanagementinfo", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopManagementInfo(HttpServletRequest request) {

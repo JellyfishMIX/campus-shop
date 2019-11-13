@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ProductCategory {
     private Long productCategoryId;
-    private Long shopId;
+    private Long shopId;    // 根据shopId筛选出某个shop对应的productCategory
     private String productCategoryName;
     private Integer priority;
     private Date createTime;

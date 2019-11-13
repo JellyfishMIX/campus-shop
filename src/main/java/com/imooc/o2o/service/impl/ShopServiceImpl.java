@@ -71,6 +71,7 @@ public class ShopServiceImpl implements ShopService {
      * @param shopId
      * @return shop
      */
+    @Override
     public Shop getShopByShopId(long shopId) {
         return shopDao.getShopByShopId(shopId);
     }
@@ -83,6 +84,7 @@ public class ShopServiceImpl implements ShopService {
      * @return
      * @throws ShopOperationException
      */
+    @Override
     public ShopExecution updateShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
         if (shop == null || shop.getShopId() == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
@@ -132,6 +134,7 @@ public class ShopServiceImpl implements ShopService {
      * @param pageSize
      * @return
      */
+    @Override
     public ShopExecution getShopListAndCount(Shop shopCondition, int pageIndex, int pageSize) {
         int rowIndex = PageCalculator.calculatorRowIndex(pageIndex, pageSize);
         List<Shop> shopList = shopDao.getShopList(shopCondition, rowIndex, pageSize);
