@@ -11,4 +11,11 @@ public interface ProductCategoryDao {
      * @return
      */
     List<ProductCategory> getProductCategoryList(long shopId);
+
+    /**
+     * 批量新增商品类别
+     * @param productCategoryList
+     * @return rows 返回影响的行数
+     */
+    int batchInsertProductCategory(List<ProductCategory> productCategoryList);
 }
