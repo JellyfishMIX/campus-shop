@@ -84,4 +84,31 @@ public class ProductCategoryManagementController {
         }
         return modelMap;
     }
+
+    /**
+     * 将此类别下的商品中的类别id置空，再删除掉该商品类别
+     * @param productCategoryId
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/deleteproductcategory", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> deleteProductCategory(Long productCategoryId, HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<String, Object>();
+        if (productCategoryId != null && productCategoryId > 0) {
+            Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
+            ProductCategoryExecution productCategoryExecution = productCategoryService.deleteProductCategory(productCategoryId, currentShop.getShopId());
+            if (productCategoryExecution.getState() == ProductCategoryStateEnum.SUCCESS.getState()) {
+                modelMap.put("success", true);
+            } else {
+                modelMap.put("success", false);
+                modelMap.put("errState", productCategoryExecution.getState());
+                modelMap.put("errStateInfo", productCategoryExecution.getStateInfo());
+            }
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "productCategoryId为空");
+        }
+        return modelMap;
+    }
 }

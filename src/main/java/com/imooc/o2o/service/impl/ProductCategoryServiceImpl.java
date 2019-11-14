@@ -24,7 +24,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      */
     @Override
     public List<ProductCategory> getProductCategoryList(long shopId) {
-        return productCategoryDao.getProductCategoryList(shopId);
+        return productCategoryDao.queryProductCategoryList(shopId);
     }
 
     /**
@@ -48,6 +48,28 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
             }
         } else {
             return new ProductCategoryExecution(ProductCategoryStateEnum.EMPTY_LIST);
+        }
+    }
+
+    /**
+     * 将此类别下的商品中的类别id置空，再删除掉该商品类别
+     * @param productCategoryId
+     * @param shopId
+     * @return
+     */
+    @Override
+    @Transactional
+    public ProductCategoryExecution deleteProductCategory(long productCategoryId, long shopId) throws ProductCategoryOperationException {
+        // TODO 将此类别下的商品中的类别id置空
+        try {
+            int effectedNum = productCategoryDao.deleteProductCategory(productCategoryId, shopId);
+            if (effectedNum <= 0) {
+                throw new ProductCategoryOperationException("商品类别删除失败");
+            } else {
+                return new ProductCategoryExecution(ProductCategoryStateEnum.SUCCESS);
+            }
+        } catch (Exception e) {
+            throw new ProductCategoryOperationException("deleteProductCategory error: " + e.toString());
         }
     }
 }
