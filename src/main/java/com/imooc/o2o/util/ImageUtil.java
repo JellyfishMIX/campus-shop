@@ -40,6 +40,7 @@ public class ImageUtil {
         }
         return newFile;
     }
+
     /**
      * 处理缩略图，将当前店铺所在的图片储存目录targetPath与realFileName.extension拼接起来，生成当前项目所关联的图片文件夹中的"绝对路径": targetPath/realFileName
      * 然后将"图片文件夹中的绝对路径"根据运行设备，生成运行设备中的"绝对路径"。在此"绝对路径"中储存图片。最后，将"图片文件夹中的绝对路径"返回，以供服务器储存记录
@@ -62,6 +63,32 @@ public class ImageUtil {
             Thumbnails.of(imageHolder.getImage()).size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water_mark.jpg")), 0.25f)
                     .outputQuality(0.8f).toFile(dest);
+        } catch (IOException e) {
+            logger.error(e.toString()); // 一旦程序出错，就可以根据debug信息进行调试。同时还可以根据logger.error提示的信息，确认错误是什么
+            e.printStackTrace();
+        }
+        return relativePath;    // relativePath会存到数据库table`shop_img`中的shop_img。根目录与运行设备有关，如果服务器迁移到别的运行设备，希望也可以正常运行。因此存入相对路径，在service层取相对路径时再加工为绝对路径
+    }
+
+    /**
+     * 和generateThumbnail类似，但生成但图片尺寸不同
+     * @param imageHolder
+     * @param targetPath
+     * @return
+     */
+    public static String generateNormalImg(ImageHolder imageHolder, String targetPath) {
+        String realFileName = getRandomFileName();  // 获取文件随机名。因为用户上传图片的名字是随机的，可能会有很多重名，因此要取随即名。
+        String extension = getFileExtension(imageHolder.getImageName()); // 获取用户上传文件的扩展名
+        maikeDirPath(targetPath);   // 创建目标路径所涉及的目录。targetPath的项目目录可能不存在，先把路径创建出来
+
+        String relativePath = targetPath + realFileName + extension;    // realFileName.extension = "随机文件名"+"扩展名" 再与targetPath结合起来，得到 targetPath/realFileName
+        logger.debug("current relativePath is: " + relativePath);   // debug中记录当前的相对路径。一旦程序出错，就可以根据debug信息进行调试。同时还可以根据logger.error提示的信息，确认错误是什么
+        File dest = new File(PathUtil.getImgBasePath() + relativePath); // 把根路径与相对路径拼接起来。dest是destination的缩写
+        logger.debug("current absolutePath is: " + PathUtil.getImgBasePath() + relativePath);   // debug中记录当前的绝对路径。一旦程序出错，就可以根据debug信息进行调试。同时还可以根据logger.error提示的信息，确认错误是什么
+        try {
+            Thumbnails.of(imageHolder.getImage()).size(337, 640)
+                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/water_mark.jpg")), 0.25f)
+                    .outputQuality(0.9f).toFile(dest);
         } catch (IOException e) {
             logger.error(e.toString()); // 一旦程序出错，就可以根据debug信息进行调试。同时还可以根据logger.error提示的信息，确认错误是什么
             e.printStackTrace();

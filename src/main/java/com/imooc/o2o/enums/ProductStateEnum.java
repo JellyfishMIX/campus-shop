@@ -2,7 +2,8 @@ package com.imooc.o2o.enums;
 
 public enum ProductStateEnum {
     SUCCESS(1, "操作成功"),
-    INNER_ERROR(-1001, "内部错误");
+    INNER_ERROR(-1001, "内部错误"),
+    EMPTY(-1002, "存在传参为空错误");
 
     private int state;
     private String stateInfo;

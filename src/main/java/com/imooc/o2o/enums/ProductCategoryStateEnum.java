@@ -4,7 +4,7 @@ public enum ProductCategoryStateEnum {
     SUCCESS(1, "操作成功"),
     INNER_ERROR(-1001, "内部错误"),
     NULL_SHOPID(-1002, "shopId为空"),
-    EMPTY_LIST(-1002, "添加数少于1");
+    EMPTY_LIST(-1003, "添加数少于1");
 
     private int state;
     private String stateInfo;
