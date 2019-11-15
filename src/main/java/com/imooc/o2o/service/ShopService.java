@@ -1,5 +1,6 @@
 package com.imooc.o2o.service;
 
+import com.imooc.o2o.dto.ImageHolder;
 import com.imooc.o2o.dto.ShopExecution;
 import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.exceptions.ShopOperationException;
@@ -11,10 +12,10 @@ public interface ShopService {
     /**
      * 新建店铺
      * @param shop
-     * @param shopImgInputStream
+     * @param imageHolder
      * @return
      */
-    ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    ShopExecution addShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
     /**
      * 通过店铺id获取店铺信息
@@ -26,12 +27,11 @@ public interface ShopService {
     /**
      * 更改店铺信息
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
+     * @param imageHolder
      * @return
      * @throws ShopOperationException
      */
-    ShopExecution updateShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+    ShopExecution updateShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
     /**
      * 根据shopCondition分页返回列表数据和店铺总数

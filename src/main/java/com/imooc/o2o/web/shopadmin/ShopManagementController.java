@@ -1,6 +1,7 @@
 package com.imooc.o2o.web.shopadmin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.imooc.o2o.dto.ImageHolder;
 import com.imooc.o2o.dto.ShopExecution;
 import com.imooc.o2o.entity.Area;
 import com.imooc.o2o.entity.PersonInfo;
@@ -12,8 +13,6 @@ import com.imooc.o2o.service.AreaService;
 import com.imooc.o2o.service.ShopCategoryService;
 import com.imooc.o2o.service.ShopService;
 import com.imooc.o2o.util.HttpServletRequestUtil;
-import com.imooc.o2o.util.ImageUtil;
-import com.imooc.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,7 +105,10 @@ public class ShopManagementController {
             ShopExecution shopExecution;
 
             try {
-                shopExecution = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                ImageHolder imageHolder = null;
+                imageHolder.setImage(shopImg.getInputStream());
+                imageHolder.setImageName(shopImg.getOriginalFilename());
+                shopExecution = shopService.addShop(shop, imageHolder);
                 if (shopExecution.getState() == ShopStateEnum.CHECK.getState()) {
                     modelMap.put("success", true);
                     List<Shop> shopList = (List<Shop>) request.getSession().getAttribute("shopList");    // 该用户可以操作的店铺列表
@@ -198,10 +200,15 @@ public class ShopManagementController {
             ShopExecution shopExecution;
 
             try {
+                ImageHolder imageHolder = null;
                 if (shopImg == null) {
-                    shopExecution = shopService.updateShop(shop, null, null);
+                    imageHolder.setImageName(null);
+                    imageHolder.setImage(null);
+                    shopExecution = shopService.updateShop(shop, imageHolder);
                 } else {
-                    shopExecution = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                    imageHolder.setImageName(shopImg.getOriginalFilename());
+                    imageHolder.setImage(shopImg.getInputStream());
+                    shopExecution = shopService.addShop(shop, imageHolder);
                 }
                 if (shopExecution.getState() == ShopStateEnum.SUCCESS.getState()) {
                     modelMap.put("success", true);

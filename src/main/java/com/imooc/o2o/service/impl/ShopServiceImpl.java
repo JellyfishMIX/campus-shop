@@ -1,6 +1,7 @@
 package com.imooc.o2o.service.impl;
 
 import com.imooc.o2o.dao.ShopDao;
+import com.imooc.o2o.dto.ImageHolder;
 import com.imooc.o2o.dto.ShopExecution;
 import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.enums.ShopStateEnum;
@@ -25,12 +26,12 @@ public class ShopServiceImpl implements ShopService {
     /**
      * 新建店铺
      * @param shop
-     * @param shopImgInputStream
+     * @param imageHolder
      * @return
      */
     @Override
     @Transactional
-    public ShopExecution addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+    public ShopExecution addShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException {
         // if阵空值判断
         if (shop == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
@@ -46,10 +47,10 @@ public class ShopServiceImpl implements ShopService {
             if (effectedNum <= 0) {
                 throw new ShopOperationException("店铺创建失败");   // 只有继承RuntimeException等类时(此处为ShopOperationException)，才可以回滚。Exception无法回滚
             } else {
-                if (shopImgInputStream != null) {
+                if (imageHolder.getImage() != null) {
                     // 存储图片
                     try {
-                        this.addShopImg(shop, shopImgInputStream, fileName);  // .addShopImg()中有一个.shop.setShopImg方法，执行后把当前对象shop中的图片地址shopImg更新
+                        this.addShopImg(shop, imageHolder);  // .addShopImg()中有一个.shop.setShopImg方法，执行后把当前对象shop中的图片地址shopImg更新
                     } catch (Exception e) {
                         throw new ShopOperationException("addShopImg error: " + e.getMessage());
                     }
@@ -79,23 +80,22 @@ public class ShopServiceImpl implements ShopService {
     /**
      * 更改店铺信息
      * @param shop
-     * @param shopImgInputStream
-     * @param fileName
+     * @param imageHolder
      * @return
      * @throws ShopOperationException
      */
     @Override
-    public ShopExecution updateShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+    public ShopExecution updateShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException {
         if (shop == null || shop.getShopId() == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
         } else {
             // 1.判断是否需要处理图片
-            if (shopImgInputStream != null && fileName != null && !"".equals(fileName)) {
+            if (imageHolder.getImage() != null && imageHolder.getImageName() != null && !"".equals(imageHolder.getImageName())) {
                 Shop tempShop = shopDao.getShopByShopId(shop.getShopId());
                 if (tempShop.getShopImg() != null) {
                     ImageUtil.deleteFileOrPath(tempShop.getShopImg());
                 }
-                addShopImg(shop, shopImgInputStream, fileName);
+                addShopImg(shop, imageHolder);
             }
         }
         // 2.更新店铺信息
@@ -112,16 +112,16 @@ public class ShopServiceImpl implements ShopService {
     /**
      * 私有方法，增加店铺图片并存储
      * @param shop
-     * @param shopImgInputStream, String fileName
+     * @param imageHolder
      */
-    private void addShopImg(Shop shop, InputStream shopImgInputStream, String fileName) {
+    private void addShopImg(Shop shop, ImageHolder imageHolder) {
         // 图片存储在项目的图片目录下，获取该shop图片的相对路径
         String targetPath = PathUtil.getShopImgPath(shop.getShopId());  // 初等相对路径，需进一步加工得到完整相对路径。为什么这一步获得的是初等相对路径？因为这一步得到的是"targetPath"，当前店铺所在的图片储存目录，仅为当前店铺服务。
 
         // 处理缩略图，将当前店铺所在的图片储存目录targetPath与realFileName.extension拼接起来，生成当前项目所关联的图片文件夹中的"绝对路径": targetPath/realFileName
         // 然后将"图片文件夹中的绝对路径"根据运行设备，生成运行设备中的"绝对路径"。在此"绝对路径"中储存图片。最后，将"图片文件夹中的绝对路径"返回，以供服务器储存记录
         // 此方法内部会生成一个随机的文件名，realFileName.extension = "随机文件名"+"扩展名" 再与targetPath结合起来，得到 targetPath/realFileName。生成当前图片项目中的"绝对路径"，此"项目中绝对路径"并不等于"硬件设备储存中的根路径"
-        String shopImgRelativePath = ImageUtil.generateThumbnail(shopImgInputStream, fileName, targetPath);  // 将"图片文件夹中的绝对路径"返回
+        String shopImgRelativePath = ImageUtil.generateThumbnail(imageHolder, targetPath);  // 将"图片文件夹中的绝对路径"返回
 
         System.out.println(shopImgRelativePath);
         shop.setShopImg(shopImgRelativePath);   // 把当前对象shop中的图片地址shopImg更新，用于更新数据库
