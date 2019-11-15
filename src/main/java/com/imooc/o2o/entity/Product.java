@@ -8,8 +8,8 @@ public class Product {
     private String productName;
     private String productDesc;
     private String imgAddr;
-    private String normalPrice;
-    private String promotionPrice;
+    private Integer normalPrice;
+    private Integer promotionPrice;
     private Integer priority;
     private Date createTime;
     private Date lastEditTime;
@@ -52,19 +52,19 @@ public class Product {
         this.imgAddr = imgAddr;
     }
 
-    public String getNormalPrice() {
+    public Integer getNormalPrice() {
         return normalPrice;
     }
 
-    public void setNormalPrice(String normalPrice) {
+    public void setNormalPrice(Integer normalPrice) {
         this.normalPrice = normalPrice;
     }
 
-    public String getPromotionPrice() {
+    public Integer getPromotionPrice() {
         return promotionPrice;
     }
 
-    public void setPromotionPrice(String promotionPrice) {
+    public void setPromotionPrice(Integer promotionPrice) {
         this.promotionPrice = promotionPrice;
     }
 

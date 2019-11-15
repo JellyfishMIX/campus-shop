@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class ProductImg {
     private Long productImgId;
-    private String ImgAddr;
-    private String ImgDesc;
+    private String imgAddr;
+    private String imgDesc;
     private Integer priority;
     private Date createTime;
-    private Long ProductId;
+    private Long productId;
 
 //    Getter and Setter
 
@@ -21,19 +21,19 @@ public class ProductImg {
     }
 
     public String getImgAddr() {
-        return ImgAddr;
+        return imgAddr;
     }
 
     public void setImgAddr(String imgAddr) {
-        ImgAddr = imgAddr;
+        this.imgAddr = imgAddr;
     }
 
     public String getImgDesc() {
-        return ImgDesc;
+        return imgDesc;
     }
 
     public void setImgDesc(String imgDesc) {
-        ImgDesc = imgDesc;
+        this.imgDesc = imgDesc;
     }
 
     public Integer getPriority() {
@@ -53,10 +53,10 @@ public class ProductImg {
     }
 
     public Long getProductId() {
-        return ProductId;
+        return productId;
     }
 
     public void setProductId(Long productId) {
-        ProductId = productId;
+        this.productId = productId;
     }
 }
