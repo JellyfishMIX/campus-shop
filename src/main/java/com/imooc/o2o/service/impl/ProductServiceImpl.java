@@ -82,6 +82,11 @@ public class ProductServiceImpl implements ProductService {
         product.setImgAddr(thumbnailAddr);
     }
 
+    /**
+     * 批量添加商品的详情图
+     * @param product
+     * @param imageHolderList
+     */
     private void addProductImgList(Product product, List<ImageHolder> imageHolderList) {
         String targetPath = PathUtil.getShopImgPath(product.getShop().getShopId()); // 获取用于存储图片的目录路径
         List<ProductImg> productImgList = new ArrayList<ProductImg>();

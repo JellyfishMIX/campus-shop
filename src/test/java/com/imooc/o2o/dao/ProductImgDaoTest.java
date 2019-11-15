@@ -3,6 +3,7 @@ package com.imooc.o2o.dao;
 import com.imooc.o2o.BaseTest;
 import com.imooc.o2o.entity.ProductImg;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +16,7 @@ public class ProductImgDaoTest extends BaseTest {
     private ProductImgDao productImgDao;
 
     @Test
+    @Ignore
     public void testBatchInsertProductImg() {
         ProductImg productImg1 = new ProductImg();
         productImg1.setImgAddr("图片1");

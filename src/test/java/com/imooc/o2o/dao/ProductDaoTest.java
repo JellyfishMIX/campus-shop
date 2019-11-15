@@ -5,6 +5,7 @@ import com.imooc.o2o.entity.Product;
 import com.imooc.o2o.entity.ProductCategory;
 import com.imooc.o2o.entity.Shop;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +16,7 @@ public class ProductDaoTest extends BaseTest {
     private ProductDao productDao;
 
     @Test
+    @Ignore
     public void testInsertProduct() {
         Product product = new Product();
         product.setProductName("可乐");
