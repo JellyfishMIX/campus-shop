@@ -9,4 +9,11 @@ public interface ProductDao {
      * @return
      */
     int insertProduct(Product product);
+
+    /**
+     * 通过productId获取对应的product
+     * @param productId
+     * @return
+     */
+    Product queryProductByProductId(long productId);
 }
