@@ -34,7 +34,7 @@
             <id property="productImgId" column="product_img_id" />
             <result property="imgAddr" column="detail_img" />
             <result property="imgDesc" column="img_desc" />
-            <result property="priority" column="priority" />
+            <result property="priority" column="pm_priority" />
             <result property="createTime" column="pm_create_time" />
             <result property="productId" column="product_id" />
         </collection>
@@ -48,7 +48,7 @@
         p.img_addr,
         p.normal_price,
         p.promotion_price,
-        p.prority,
+        p.priority,
         p.create_time,
         p.last_edit_time,
         p.enable_status,
@@ -57,7 +57,7 @@
         pm.product_img_id,
         pm.img_addr as detail_img,
         pm.img_desc,
-        pm.priority,
+        pm.priority as pm_priority,
         pm.create_time as pm_create_time
         from
         tb_product p

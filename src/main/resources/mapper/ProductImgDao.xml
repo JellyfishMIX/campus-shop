@@ -12,7 +12,7 @@
         </foreach>
     </insert>
 
-    <delete id="deleteProductImgByProductId">
+    <delete id="deleteProductImgByProductId" parameterType="Long">
         delete from
         tb_product_img
         where
