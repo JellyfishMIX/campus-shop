@@ -16,4 +16,11 @@ public interface ProductDao {
      * @return
      */
     Product queryProductByProductId(long productId);
+
+    /**
+     * 更新商品信息
+     * @param product
+     * @return
+     */
+    int updateProduct(Product product);
 }

@@ -11,4 +11,11 @@
             (#{productImg.imgAddr}, #{productImg.imgDesc}, #{productImg.priority}, #{productImg.createTime}, #{productImg.productId})
         </foreach>
     </insert>
+
+    <delete id="deleteProductImgByProductId">
+        delete from
+        tb_product_img
+        where
+        product_id = #{productId}
+    </delete>
 </mapper>
