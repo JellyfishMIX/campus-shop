@@ -49,6 +49,7 @@ public class ProductDaoTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testBQueryProductByProductId() {
         long productId = 1;
         // 初始化两个商品详情图实例作为productId为1的商品下的详情图
@@ -83,6 +84,7 @@ public class ProductDaoTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void testCUpdateProduct() {
         Product product = new Product();
         ProductCategory productCategory = new ProductCategory();

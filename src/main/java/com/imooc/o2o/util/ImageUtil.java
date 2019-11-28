@@ -53,7 +53,7 @@ public class ImageUtil {
     public static String generateThumbnail(ImageHolder imageHolder, String targetPath) {
         String realFileName = getRandomFileName();  // 获取文件随机名。因为用户上传图片的名字是随机的，可能会有很多重名，因此要取随即名。
         String extension = getFileExtension(imageHolder.getImageName()); // 获取用户上传文件的扩展名
-        maikeDirPath(targetPath);   // 创建目标路径所涉及的目录。targetPath的项目目录可能不存在，先把路径创建出来
+        makeDirPath(targetPath);   // 创建目标路径所涉及的目录。targetPath的项目目录可能不存在，先把路径创建出来
 
         String relativePath = targetPath + realFileName + extension;    // realFileName.extension = "随机文件名"+"扩展名" 再与targetPath结合起来，得到 targetPath/realFileName
         logger.debug("current relativePath is: " + relativePath);   // debug中记录当前的相对路径。一旦程序出错，就可以根据debug信息进行调试。同时还可以根据logger.error提示的信息，确认错误是什么
@@ -79,7 +79,7 @@ public class ImageUtil {
     public static String generateNormalImg(ImageHolder imageHolder, String targetPath) {
         String realFileName = getRandomFileName();  // 获取文件随机名。因为用户上传图片的名字是随机的，可能会有很多重名，因此要取随即名。
         String extension = getFileExtension(imageHolder.getImageName()); // 获取用户上传文件的扩展名
-        maikeDirPath(targetPath);   // 创建目标路径所涉及的目录。targetPath的项目目录可能不存在，先把路径创建出来
+        makeDirPath(targetPath);   // 创建目标路径所涉及的目录。targetPath的项目目录可能不存在，先把路径创建出来
 
         String relativePath = targetPath + realFileName + extension;    // realFileName.extension = "随机文件名"+"扩展名" 再与targetPath结合起来，得到 targetPath/realFileName
         logger.debug("current relativePath is: " + relativePath);   // debug中记录当前的相对路径。一旦程序出错，就可以根据debug信息进行调试。同时还可以根据logger.error提示的信息，确认错误是什么
@@ -98,7 +98,6 @@ public class ImageUtil {
 
     /**
      * 生成随机文件名，当前年月日小时分钟秒钟+五位随机数
-     *
      * @return
      */
     public static String getRandomFileName() {
@@ -128,7 +127,6 @@ public class ImageUtil {
 
     /**
      * 获取输入文件流的扩展名
-     *
      * @param fileName
      * @return
      */
@@ -139,11 +137,10 @@ public class ImageUtil {
     /**
      * 创建目标路径所涉及的目录，即/home/xiangzai/xxx.jpg
      * 那么home/xiangzai/xxx.jpg都会自动创建
-     *
      * @param targetPath
      * @return
      */
-    private static void maikeDirPath(String targetPath) {
+    private static void makeDirPath(String targetPath) {
         String absolutePath = PathUtil.getImgBasePath() + targetPath;   // 合成：预先规定的项目图片路径 + 目标图片子路径
         File dirPath = new File(absolutePath);  // dir, directory的缩写，意思是目录
         if (!dirPath.exists()) {

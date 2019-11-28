@@ -38,10 +38,10 @@ public class ProductManagementController {
         Map<String, Object> modelMap = new HashMap<String, Object>();
         // 接收前端参数变量的初始化，包括商品，缩略图，详情图列表实体类
         ObjectMapper mapper = new ObjectMapper();
-        Product product = null;
+        Product product;
         String productStr = HttpServletRequestUtil.getString(request, "productStr");
-        MultipartHttpServletRequest multipartHttpServletRequest = null;
-        ImageHolder thumbnail = null;
+        MultipartHttpServletRequest multipartHttpServletRequest;
+        ImageHolder thumbnail;
         List<ImageHolder> productImgList = new ArrayList<ImageHolder>();
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 
