@@ -13,6 +13,7 @@
 
     <!--product的resultMap-->
     <resultMap id="productMap" type="com.imooc.o2o.entity.Product">
+        <result property="productId" column="product_id" />
         <result property="productName" column="product_name" />
         <result property="productDesc" column="product_desc" />
         <result property="imgAddr" column="img_addr" />
