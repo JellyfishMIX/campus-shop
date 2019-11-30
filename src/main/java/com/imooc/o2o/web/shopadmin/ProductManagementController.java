@@ -176,10 +176,6 @@ public class ProductManagementController {
                 CommonsMultipartFile thumbnailFile = (CommonsMultipartFile) multipartHttpServletRequest.getFile("thumbnail");
                 if (thumbnailFile != null) {
                     thumbnail = new ImageHolder(thumbnailFile.getOriginalFilename(), thumbnailFile.getInputStream());
-                } else {
-                    modelMap.put("success", false);
-                    modelMap.put("errMsg", "商品缩略图不能为空");
-                    return modelMap;
                 }
                 // 取出详情图列表并构建List<ImageHolder>对象
                 for (int i=0; i<IMAGE_MAX_COUNT; i++) {

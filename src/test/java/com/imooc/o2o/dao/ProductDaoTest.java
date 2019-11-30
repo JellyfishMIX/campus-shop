@@ -102,4 +102,23 @@ public class ProductDaoTest extends BaseTest {
         int effectedNum = productDao.updateProduct(product);
         Assert.assertEquals(1, effectedNum);
     }
+
+    @Test
+    @Ignore
+    public void testQueryProductList() throws Exception {
+        Product productCondition = new Product();
+        // 分页查询，预期返回两条结果
+        List<Product> productList = productDao.queryProductList(productCondition, 0, 3);
+        Assert.assertEquals(productList.size(), 3);
+
+        // 查询商品总数
+        int count = productDao.queryProductCount(productCondition);
+        Assert.assertEquals(3, count);
+        // 查询名称为"可乐"的总数，使用模糊查询，预期返回1
+        productCondition.setProductName("可乐");
+        productList = productDao.queryProductList(productCondition, 0, 3);
+        Assert.assertEquals(1, productList.size());
+        count = productDao.queryProductCount(productCondition);
+        Assert.assertEquals(1, count);
+    }
 }
