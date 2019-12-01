@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imooc.o2o.dto.ImageHolder;
 import com.imooc.o2o.dto.ProductExecution;
 import com.imooc.o2o.entity.Product;
+import com.imooc.o2o.entity.ProductCategory;
 import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.enums.ProductStateEnum;
 import com.imooc.o2o.service.ProductService;
@@ -239,5 +240,58 @@ public class ProductManagementController {
             modelMap.put("errMsg", "提交的product对象不能为空");
             return modelMap;
         }
+    }
+
+    @RequestMapping(value = "/getproductlistbyshop", method = RequestMethod.GET)
+    @ResponseBody
+    private Map<String, Object> getProductListByShop(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<>();
+        // 获取前端传入的页码
+        int pageIndex = HttpServletRequestUtil.getInt(request, "pageIndex");
+        // 获取前端传入的每页尺寸规格
+        int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
+        // 从当前session中获取店铺信息，主要是获取shopId
+        Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
+        // 空值判断
+        if ((pageIndex > -1) && (pageSize > -1) && (currentShop != null) && (currentShop.getShopId() != null)) {
+            // 获取前端传入的需要检索的条件，包括是否需要从某个商品类别及模糊查找商品名去筛选某个店铺下的商品列表
+            // 筛选的条件可以进行排列组合
+            long productCategoryId = HttpServletRequestUtil.getLong(request, "productCategoryId");
+            String productName = HttpServletRequestUtil.getString(request, "productName");
+            Product productCondition = compactProductCondition(currentShop.getShopId(), productCategoryId, productName);
+            // 传入查询条件以及分页信息进行查询，返回相应商品列表以及符合条件的商品总数
+            ProductExecution productExecution = productService.getProductList(productCondition, pageIndex, pageSize);
+            modelMap.put("success", true);
+            modelMap.put("productList", productExecution.getProductList());
+            modelMap.put("productCount", productExecution.getCount());
+            return modelMap;
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "empty shopId or pageIndex or pageSize");
+            return modelMap;
+        }
+    }
+
+    /**
+     * 整合商品查询条件
+     * @param shopId
+     * @param productCategoryId
+     * @param productName
+     * @return
+     */
+    private Product compactProductCondition(long shopId, long productCategoryId, String productName) {
+        Product productCondition = new Product();
+        Shop shop = new Shop();
+        shop.setShopId(shopId);
+        // 若有某项条件也要整合进去
+        if (productCategoryId != -1L) {
+            ProductCategory productCategory = new ProductCategory();
+            productCategory.setProductCategoryId(productCategoryId);
+            productCondition.setProductCategory(productCategory);
+        }
+        if (productName != null) {
+            productCondition.setProductName(productName);
+        }
+        return productCondition;
     }
 }

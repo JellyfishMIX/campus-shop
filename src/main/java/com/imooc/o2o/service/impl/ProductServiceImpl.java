@@ -127,18 +127,18 @@ public class ProductServiceImpl implements ProductService {
 
     /**
      * 查询商品列表并分页，可输入的条件有：商品名（模糊），商品状态，店铺Id，商品类别
-     * @param product
+     * @param productCondition
      * @param pageIndex
      * @param pageSize
      * @return
      */
     @Override
-    public ProductExecution getProductList(Product product, int pageIndex, int pageSize) {
+    public ProductExecution getProductList(Product productCondition, int pageIndex, int pageSize) {
         // 页码转化成数据库的行码，并调用dao层取回指定页码的商品列表
         int rowIndex = PageCalculator.calculatorRowIndex(pageIndex, pageSize);
-        List<Product> productList = productDao.queryProductList(product, rowIndex, pageSize);
+        List<Product> productList = productDao.queryProductList(productCondition, rowIndex, pageSize);
         // 基于同样的查询条件返回该查询条件下的商品总数
-        int count = productDao.queryProductCount(product);
+        int count = productDao.queryProductCount(productCondition);
         ProductExecution productExecution = new ProductExecution();
         productExecution.setProductList(productList);
         productExecution.setCount(count);
