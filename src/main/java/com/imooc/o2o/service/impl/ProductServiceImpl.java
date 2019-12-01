@@ -11,6 +11,7 @@ import com.imooc.o2o.exceptions.ProductCategoryOperationException;
 import com.imooc.o2o.exceptions.ProductOperationException;
 import com.imooc.o2o.service.ProductService;
 import com.imooc.o2o.util.ImageUtil;
+import com.imooc.o2o.util.PageCalculator;
 import com.imooc.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -125,6 +126,26 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
+     * 查询商品列表并分页，可输入的条件有：商品名（模糊），商品状态，店铺Id，商品类别
+     * @param product
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public ProductExecution getProductList(Product product, int pageIndex, int pageSize) {
+        // 页码转化成数据库的行码，并调用dao层取回指定页码的商品列表
+        int rowIndex = PageCalculator.calculatorRowIndex(pageIndex, pageSize);
+        List<Product> productList = productDao.queryProductList(product, rowIndex, pageSize);
+        // 基于同样的查询条件返回该查询条件下的商品总数
+        int count = productDao.queryProductCount(product);
+        ProductExecution productExecution = new ProductExecution();
+        productExecution.setProductList(productList);
+        productExecution.setCount(count);
+        return productExecution;
+    }
+
+    /**
      * 添加商品的缩略图（主图）
      * @param product
      * @param imageHolder
@@ -166,6 +187,10 @@ public class ProductServiceImpl implements ProductService {
         product.setProductImgList(productImgList);
     }
 
+    /**
+     * 批量删除商品的详情图
+     * @param productId
+     */
     private void deleteProductImgList(long productId) {
         // 根据productId获取原来的图片
         List<ProductImg> productImgList = productImgDao.queryProductImgList(productId);

@@ -33,4 +33,13 @@ public interface ProductService {
      * @return
      */
     ProductExecution updateProduct(Product product, ImageHolder thumbnail, List<ImageHolder> productImgHolderList);
+
+    /**
+     * 查询商品列表并分页，可输入的条件有：商品名（模糊），商品状态，店铺Id，商品类别
+     * @param product
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    ProductExecution getProductList(Product product, int pageIndex, int pageSize);
 }

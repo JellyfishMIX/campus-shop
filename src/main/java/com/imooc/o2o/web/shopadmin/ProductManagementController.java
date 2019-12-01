@@ -146,6 +146,11 @@ public class ProductManagementController {
         return modelMap;
     }
 
+    /**
+     * 编辑商品
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/modifyProduct", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> modifyProduct(HttpServletRequest request) {
