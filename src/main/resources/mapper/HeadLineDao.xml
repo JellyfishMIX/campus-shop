@@ -16,7 +16,7 @@
         from
         tb_head_line
         <where>
-            <if test="headLineCondition.enableStatus != null">and enable_status = #{enableStatus}</if>
+            <if test="headLineCondition.enableStatus != null">and enable_status = #{headLineCondition.enableStatus}</if>
         </where>
         order by
         priority desc
