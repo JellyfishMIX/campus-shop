@@ -19,6 +19,9 @@ public class ProductCategoryDaoTest extends BaseTest {
     @Autowired
     private ProductCategoryDao productCategoryDao;
 
+    /**
+     * 查询指定店铺下的所有商品类别
+     */
     @Test
     @Ignore
     public void testGetProductCategoryList() {
@@ -27,6 +30,9 @@ public class ProductCategoryDaoTest extends BaseTest {
         System.out.println("该店铺自定义类别数目为：" + productCategoryList.size() + "个");
     }
 
+    /**
+     * 批量新增商品类别
+     */
     @Test
     @Ignore
     public void testABatchInsertProductCategoryList() {
@@ -48,10 +54,13 @@ public class ProductCategoryDaoTest extends BaseTest {
         Assert.assertEquals(2, effectedNum);
     }
 
+    /**
+     * 删除指定的商品类别
+     */
     @Test
     @Ignore
     public void testBDeleteProductCategory() {
-        long shopId = 1;
+        long shopId = 1L;
         List<ProductCategory> productCategoryList = productCategoryDao.queryProductCategoryList(shopId);
         for (ProductCategory productCategory:productCategoryList) {
             if ("测试商品类别3".equals(productCategory.getProductCategoryName()) || "测试商品类别4".equals(productCategory.getProductCategoryName())) {

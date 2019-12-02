@@ -129,4 +129,14 @@
             <if test="productCondition.enableStatus != null">and enable_status = #{productCondition.enableStatus}</if>
         </where>
     </select>
+
+    <!--删除商品之前，将商品类别Id置空-->
+    <update id="updateProductCategoryToNull" parameterType="Long">
+        update
+        tb_product
+        set
+        product_category_id = null
+        where
+        product_category_id = #{productCategoryId}
+    </update>
 </mapper>
