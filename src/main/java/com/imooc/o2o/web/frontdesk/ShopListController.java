@@ -111,6 +111,14 @@ public class ShopListController {
         }
     }
 
+    /**
+     * 整合getShopListAndCount的搜索条件
+     * @param parentId
+     * @param shopCategoryId
+     * @param areaId
+     * @param shopName
+     * @return
+     */
     private Shop compactShopCondition4Search(long parentId, long shopCategoryId, int areaId, String shopName) {
         Shop shopCondition = new Shop();
         // 查询某个一级shopCategory下面，所有二级shopCategory里面的店铺列表
