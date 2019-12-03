@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -74,7 +73,7 @@ public class ShopServiceImpl implements ShopService {
      */
     @Override
     public Shop getShopByShopId(long shopId) {
-        return shopDao.getShopByShopId(shopId);
+        return shopDao.queryShopByShopId(shopId);
     }
 
     /**
@@ -91,7 +90,7 @@ public class ShopServiceImpl implements ShopService {
         } else {
             // 1.判断是否需要处理图片
             if (imageHolder.getImage() != null && imageHolder.getImageName() != null && !"".equals(imageHolder.getImageName())) {
-                Shop tempShop = shopDao.getShopByShopId(shop.getShopId());
+                Shop tempShop = shopDao.queryShopByShopId(shop.getShopId());
                 if (tempShop.getShopImg() != null) {
                     ImageUtil.deleteFileOrPath(tempShop.getShopImg());
                 }
@@ -104,7 +103,7 @@ public class ShopServiceImpl implements ShopService {
         if (effectedNum <= 0) {
             return new ShopExecution(ShopStateEnum.INNER_ERROR);
         } else {
-            shop = shopDao.getShopByShopId(shop.getShopId());
+            shop = shopDao.queryShopByShopId(shop.getShopId());
             return new ShopExecution(ShopStateEnum.SUCCESS, shop);
         }
     }
@@ -137,8 +136,8 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public ShopExecution getShopListAndCount(Shop shopCondition, int pageIndex, int pageSize) {
         int rowIndex = PageCalculator.calculatorRowIndex(pageIndex, pageSize);
-        List<Shop> shopList = shopDao.getShopList(shopCondition, rowIndex, pageSize);
-        int count = shopDao.getShopCount(shopCondition);
+        List<Shop> shopList = shopDao.queryShopList(shopCondition, rowIndex, pageSize);
+        int count = shopDao.queryShopCount(shopCondition);
         ShopExecution shopExecution = new ShopExecution();
         if (shopList != null) {
             shopExecution.setShopList(shopList);

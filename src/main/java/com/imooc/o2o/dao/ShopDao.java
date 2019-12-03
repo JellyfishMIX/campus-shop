@@ -18,7 +18,7 @@ public interface ShopDao {
      * @param shopId
      * @return shop
      */
-    Shop getShopByShopId(long shopId);
+    Shop queryShopByShopId(long shopId);
 
     /**
      * 更新店铺信息
@@ -34,12 +34,12 @@ public interface ShopDao {
      * @param pageSize 返回的条数
      * @return
      */
-    List<Shop> getShopList(@Param("shopCondition") Shop shopCondition, @Param("rowIndex") int rowIndex, @Param("pageSize") int pageSize);
+    List<Shop> queryShopList(@Param("shopCondition") Shop shopCondition, @Param("rowIndex") int rowIndex, @Param("pageSize") int pageSize);
 
     /**
      * 返回店铺总数
      * @param shopCondition
      * @return
      */
-    int getShopCount(@Param("shopCondition") Shop shopCondition);
+    int queryShopCount(@Param("shopCondition") Shop shopCondition);
 }

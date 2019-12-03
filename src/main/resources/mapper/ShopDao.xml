@@ -58,7 +58,7 @@
     </resultMap>
 
     <!--通过某个ShopId，获取对应店铺-->
-    <select id="getShopByShopId" resultMap="shopMap" parameterType="Long">
+    <select id="queryShopByShopId" resultMap="shopMap" parameterType="Long">
         select
         s.shop_id,
         s.shop_name,
@@ -88,7 +88,7 @@
     </select>
 
     <!--获取店铺列表-->
-    <select id="getShopList" resultMap="shopMap">
+    <select id="queryShopList" resultMap="shopMap">
         select
         s.shop_id,
         s.shop_name,
@@ -110,8 +110,13 @@
         tb_area a,
         tb_shop_category sc
         <where>
-            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopId != null">
+            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
                 and s.shop_category_id = #{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <if test="shopCondition.shopCategory != null
+            and shopCondition.shopCategory.parent != null
+            and shopCondition.shopCategory.parent.shopCategoryId != null">
+                and s.shop_category_id in (select shop_category_id from tb_shop_category where parent_id = #{shopCondition.shopCategory.parent.shopCategoryId})
             </if>
             <if test="shopCondition.area != null and shopCondition.area.areaId != null">
                 and s.shop_area_id = #{shopCondition.area.areaId}
@@ -136,7 +141,7 @@
     </select>
 
     <!--获取店铺总数-->
-    <select id="getShopCount" resultType="int">
+    <select id="queryShopCount" resultType="int">
         select
         count(1)
         from
@@ -144,8 +149,14 @@
         tb_area a,
         tb_shop_category sc
         <where>
-            <if test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopId != null">
+            <if test="shopCondition.shopCategory != null
+            and shopCondition.shopCategory.shopCategoryId != null">
                 and s.shop_category_id = #{shopCondition.shopCategory.shopCategoryId}
+            </if>
+            <if test="shopCondition.shopCategory != null
+            and shopCondition.shopCategory.parent != null
+            and shopCondition.shopCategory.parent.shopCategoryId != null">
+                and s.shop_category_id in (select shop_category_id from tb_shop_category where parent_id = #{shopCondition.shopCategory.parent.shopCategoryId})
             </if>
             <if test="shopCondition.area != null and shopCondition.area.areaId != null">
                 and s.shop_area_id = #{shopCondition.area.areaId}
