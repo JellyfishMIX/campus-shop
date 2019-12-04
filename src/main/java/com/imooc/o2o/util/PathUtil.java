@@ -10,9 +10,9 @@ public class PathUtil {
         String basePath = "";
 
         if (os.toLowerCase().startsWith("win")) {
-            basePath = "D:/projectdev/java_image/o2o/";
+            basePath = "D:/projectdev/java_image/o2o";
         } else {
-            basePath = "/Users/qianshijie/Programming/Backend/Java/Images/o2o/";
+            basePath = "/Users/qianshijie/Programming/Backend/Java/Images/o2o";
         }
         basePath = basePath.replace("/", separator);
         return basePath;
@@ -25,7 +25,7 @@ public class PathUtil {
      * @return
      */
     public static String getShopImgPath(long shopId) {
-        String imagePath = "upload/item/shop/" + shopId + "/";
+        String imagePath = "/upload/item/shop/" + shopId + "/";
         return imagePath.replace("/", separator);
     }
 }
