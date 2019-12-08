@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-// @Transactional
 public class AreaServiceImpl implements AreaService {
     @Autowired
     private AreaDao areaDao;
@@ -30,7 +29,7 @@ public class AreaServiceImpl implements AreaService {
     @Autowired
     private JedisUtil.Strings jedisStrings;
 
-    private static String AREALIST_KEY = "arealist";
+    private static String AREALIST_KEY = "area_list";
     private static Logger logger = LoggerFactory.getLogger(AreaServiceImpl.class);
 
     @Override
@@ -44,13 +43,14 @@ public class AreaServiceImpl implements AreaService {
             String jsonString;
             try {
                 jsonString = objectMapper.writeValueAsString(areaList);
+                jedisStrings.set(key, jsonString);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
                 logger.error(e.getMessage());
                 throw new AreaOperationException(e.getMessage());
             }
-            jedisStrings.set(key, jsonString);
         } else {
+            // 若存在，则直接从redis中拿取所需数据
             String jsonString = jedisStrings.get(key);
             JavaType javaType = objectMapper.getTypeFactory().constructParametricType(ArrayList.class, Area.class);
             try {

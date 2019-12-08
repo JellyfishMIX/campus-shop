@@ -11,5 +11,5 @@ public interface HeadLineService {
      * @param headLineCondition
      * @return
      */
-    List<HeadLine> getHeadLineList(HeadLine headLineCondition) throws IOException;
+    List<HeadLine> getHeadLineList(HeadLine headLineCondition);
 }
