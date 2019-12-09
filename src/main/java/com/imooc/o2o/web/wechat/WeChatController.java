@@ -16,7 +16,7 @@ import com.imooc.o2o.util.wechat.SignUtil;
 
 @Controller
 //一会在设置的URL里面就设置上这个路由
-@RequestMapping("wechat")
+@RequestMapping("/api/wechat")
 public class WeChatController {
 
     private static Logger log = LoggerFactory.getLogger(WeChatController.class);

@@ -29,7 +29,6 @@ public class HeadLineServiceImpl implements HeadLineService {
     @Autowired
     private JedisUtil.Strings jedisStrings;
 
-    private static String HEAD_LINE_LIST_KEYS = "head_line_list";
     private static Logger logger = LoggerFactory.getLogger(HeadLineServiceImpl.class);
 
     @Override

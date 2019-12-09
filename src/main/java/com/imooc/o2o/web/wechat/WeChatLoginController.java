@@ -16,7 +16,7 @@ import com.imooc.o2o.dto.WeChatUser;
 import com.imooc.o2o.util.wechat.WeChatUserUtil;
 
 @Controller
-@RequestMapping("/wechatlogin")
+@RequestMapping("/api/wechatlogin")
 /**
  * 获取关注公众号之后的微信用户信息的接口，如果在微信浏览器里访问
  * https://open.weixin.qq.com/connect/oauth2/authorize?appid=您的appId&redirect_uri=http://o2o.yitiaojieinfo.com/o2o/wechatlogin/logincheck&role_type=1&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect

@@ -29,7 +29,6 @@ public class ShopCategoryServiceImpl implements ShopCategoryService {
     @Autowired
     private JedisUtil.Strings jedisStrings;
 
-    private static String SHOP_CATEGORY_LIST = "shop_category_list";
     private static Logger logger = LoggerFactory.getLogger(ShopCategoryServiceImpl.class);
 
     @Override
