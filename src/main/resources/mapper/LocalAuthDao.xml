@@ -44,7 +44,7 @@
         tb_person_info
         on tb_local_auth.user_id = tb_person_info.user_id
         where
-        tb_local_auth.name = #{username}
+        tb_local_auth.username = #{username}
         and
         tb_local_auth.password = #{password}
     </select>
@@ -78,18 +78,18 @@
         insert into
         tb_local_auth(username, password, user_id, create_time, last_edit_time)
         values
-        (#{username}, #{password}, #{personInfo.userId}, #{createtime}, #{lastEditTime});
+        (#{username}, #{password}, #{personInfo.userId}, #{createTime}, #{lastEditTime});
     </insert>
 
     <!--通过userId, userName, password更改密码-->
     <update id="updateLocalAuth">
         update tb_local_auth
         <set>
-            <if test="newPassword != null">password = #{newPassword}</if>
+            <if test="newPassword != null">password = #{newPassword},</if>
             <if test="lastEditTime != null">last_edit_time = #{lastEditTime}</if>
         </set>
         where user_id = #{userId}
-        and user_name = #{username}
+        and username = #{username}
         and password = #{password}
     </update>
 </mapper>
