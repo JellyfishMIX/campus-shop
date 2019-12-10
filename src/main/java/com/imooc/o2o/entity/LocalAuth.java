@@ -5,14 +5,20 @@ package com.imooc.o2o.entity;
 import java.util.Date;
 
 public class LocalAuth {
+    // 主键Id
     private Long localAuthId;
+    // 账号
     private String username;
+    // 密码
     private String password;
+    // 创建时间
     private Date createTime;
+    // 最近一次更新时间
     private Date lastEditTime;
+    // 个人信息，关系为一一对应
     private PersonInfo personInfo;
 
-//    Getter and Setter
+    // Getter and Setter
 
     public Long getLocalAuthId() {
         return localAuthId;

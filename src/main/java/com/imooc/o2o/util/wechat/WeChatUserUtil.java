@@ -47,8 +47,11 @@ public class WeChatUserUtil {
         String appsecret = "4e1434908df4e8486ebb786f49e88f94";
         log.debug("secret:" + appsecret);
         // 根据传入的code,拼接出访问微信定义好的接口的URL
-        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appId + "&secret=" + appsecret
-                + "&code=" + code + "&grant_type=authorization_code";
+        // String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + appId + "&secret=" + appsecret
+        //         + "&code=" + code + "&grant_type=authorization_code";
+        // https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
+        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId + "&secret=" + appsecret;
+
         // 向相应URL发送请求获取token json字符串
         String tokenStr = httpsRequest(url, "GET", null);
         log.debug("userAccessToken:" + tokenStr);

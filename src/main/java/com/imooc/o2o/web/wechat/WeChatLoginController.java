@@ -64,7 +64,8 @@ public class WeChatLoginController {
         // ======todo end======
         if (user != null) {
             // 获取到微信验证的信息后返回到指定的路由（需要自己设定）
-            return "frontend/index";
+            return null;
+            // return "frontdesk/index";
         } else {
             return null;
         }
