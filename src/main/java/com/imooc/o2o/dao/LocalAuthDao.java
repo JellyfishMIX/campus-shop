@@ -12,14 +12,14 @@ public interface LocalAuthDao {
      * @param password
      * @return
      */
-    LocalAuth queryLocalByUserNameAndPassword(@Param("username") String username, @Param("password") String password);
+    LocalAuth queryLocalAuthByUserNameAndPassword(@Param("username") String username, @Param("password") String password);
 
     /**
      * 通过用户Id查询对应localAuth
      * @param userId
      * @return
      */
-    LocalAuth queryLocalByUserId(@Param("userId") long userId);
+    LocalAuth queryLocalAuthByUserId(@Param("userId") long userId);
 
     /**
      * 添加平台账号

@@ -22,7 +22,7 @@
             <result property="enable_status" column="enableStatus" />
         </association>
     </resultMap>
-    <select id="queryLocalByUserNameAndPassword" resultMap="localAuthResultMap" parameterType="String">
+    <select id="queryLocalAuthByUserNameAndPassword" resultMap="localAuthResultMap" parameterType="String">
         select
         tb_local_auth.local_auth_id,
         tb_local_auth.username,
@@ -48,8 +48,9 @@
         and
         tb_local_auth.password = #{password}
     </select>
-    
-    <select id="queryLocalByUserId" resultMap="localAuthResultMap" parameterType="long">
+
+    <!--通过用户Id查询对应localAuth-->
+    <select id="queryLocalAuthByUserId" resultMap="localAuthResultMap" parameterType="long">
         select
         tb_local_auth.local_auth_id,
         tb_local_auth.username,
