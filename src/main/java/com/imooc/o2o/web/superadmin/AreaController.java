@@ -18,11 +18,14 @@ import java.util.Map;
 @Controller
 @RequestMapping("/api/superadmin")
 public class AreaController {
-    Logger logger = LoggerFactory.getLogger(AreaController.class);
-
-    // 列出区域列表
     @Autowired
     private AreaService areaService;
+    Logger logger = LoggerFactory.getLogger(AreaController.class);
+
+    /**
+     * 列出区域列表
+     * @return
+     */
     @RequestMapping(value = "/listarea", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> listArea() {

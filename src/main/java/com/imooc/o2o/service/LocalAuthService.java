@@ -3,7 +3,6 @@ package com.imooc.o2o.service;
 import com.imooc.o2o.dto.LocalAuthExecution;
 import com.imooc.o2o.entity.LocalAuth;
 import com.imooc.o2o.exceptions.LocalAuthOperationException;
-import org.apache.ibatis.annotations.Param;
 
 public interface LocalAuthService {
     /**
