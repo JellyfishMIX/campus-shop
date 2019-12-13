@@ -69,7 +69,7 @@ public class ShopManagementController {
      * 2.注册店铺
      * 3.返回结果，此步在1. 2. 中
      */
-    @RequestMapping(value = "registershop", method = RequestMethod.POST)
+    @RequestMapping(value = "/registershop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerShop(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -111,7 +111,8 @@ public class ShopManagementController {
                 shopExecution = shopService.addShop(shop, imageHolder);
                 if (shopExecution.getState() == ShopStateEnum.CHECK.getState()) {
                     modelMap.put("success", true);
-                    List<Shop> shopList = (List<Shop>) request.getSession().getAttribute("shopList");    // 该用户可以操作的店铺列表
+                    // 该用户可以操作的店铺列表，把新创建的店铺加入店铺列表中
+                    List<Shop> shopList = (List<Shop>) request.getSession().getAttribute("shopList");
                     if (shopList == null || shopList.size() == 0) {
                         shopList = new ArrayList<Shop>();
                     }
@@ -234,7 +235,7 @@ public class ShopManagementController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/getshoplistandcount", method = RequestMethod.GET)
+    @RequestMapping(value = "/getshoplist", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopListAndCount(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
@@ -247,6 +248,9 @@ public class ShopManagementController {
             Shop shopCondition = new Shop();
             shopCondition.setOwner(user);
             ShopExecution shopExecution = shopService.getShopListAndCount(shopCondition, 0, 100);
+
+            // 列出店铺列表成功后，将店铺放入session中作为权限验证依据，即该账号只能操作它自己的店铺
+            request.getSession().setAttribute("shopList", shopExecution.getShopList());
             modelMap.put("success", true);
             modelMap.put("shopList", shopExecution.getShopList());
             modelMap.put("user", user);
