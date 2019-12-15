@@ -12,9 +12,9 @@ public class ShopCategory {
     private Integer priority;
     private Date createTime;
     private Date lastEditTime;
-    private ShopCategory parent;    //上级ID，上级ID为空表示根类，根类下面都是子类。通过上级ID可以实现无限分割。
+    private ShopCategory parent;    //上级Id，上级Id为空表示根类，根类下面都是子类。通过上级Id可以实现无限分割。
 
-//    Getter and Setter
+    // Getter and Setter
     public Long getShopCategoryId() {
         return shopCategoryId;
     }

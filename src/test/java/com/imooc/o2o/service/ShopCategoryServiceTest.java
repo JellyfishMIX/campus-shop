@@ -1,6 +1,7 @@
 package com.imooc.o2o.service;
 
 import com.imooc.o2o.BaseTest;
+import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.entity.ShopCategory;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -17,7 +18,11 @@ public class ShopCategoryServiceTest extends BaseTest {
     @Test
     @Ignore
     public void testGetShopCategoryList() {
-        List<ShopCategory> shopCategoryList = shopCategoryService.getShopCategoryList(null);
+        ShopCategory shopCategoryCondition = new ShopCategory();
+        ShopCategory parent = new ShopCategory();
+        parent.setShopCategoryId(4L);
+        shopCategoryCondition.setParent(parent);
+        List<ShopCategory> shopCategoryList = shopCategoryService.getShopCategoryList(shopCategoryCondition);
         Assert.assertEquals(2, shopCategoryList.size());
     }
 }

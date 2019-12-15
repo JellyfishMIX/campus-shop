@@ -70,10 +70,15 @@ public class ShopServiceTest extends BaseTest {
     @Ignore
     public void testGetShopListAndCount() {
         Shop shopCondition = new Shop();
-        PersonInfo owner = new PersonInfo();
-        owner.setUserId(1L);
-        shopCondition.setOwner(owner);
-        ShopExecution shopExecution = shopService.getShopListAndCount(shopCondition, 1, 2);
+        ShopCategory parentCategory = new ShopCategory();
+        ShopCategory childCategory = new ShopCategory();
+        parentCategory.setShopCategoryId(4L);
+        childCategory.setParent(parentCategory);
+        shopCondition.setShopCategory(childCategory);
+
+        shopCondition.setEnableStatus(1);
+
+        ShopExecution shopExecution = shopService.getShopListAndCount(shopCondition, 1, 3);
         System.out.println("店铺列当前页每页规格为：" + shopExecution.getShopList().size());
         System.out.println("店铺总数为：" + shopExecution.getCount());
     }

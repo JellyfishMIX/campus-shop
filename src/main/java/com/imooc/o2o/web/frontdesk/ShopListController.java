@@ -44,6 +44,7 @@ public class ShopListController {
                 ShopCategory shopCategoryCondition = new ShopCategory();
                 ShopCategory parent = new ShopCategory();
                 parent.setShopCategoryId(parentId);
+                shopCategoryCondition.setParent(parent);
                 shopCategoryList = shopCategoryService.getShopCategoryList(shopCategoryCondition);
             } catch (Exception e) {
                 modelMap.put("success", false);
@@ -73,6 +74,7 @@ public class ShopListController {
             return modelMap;
         }
 
+        modelMap.put("success", true);
         return modelMap;
     }
 
@@ -130,7 +132,7 @@ public class ShopListController {
             shopCondition.setShopCategory(childCategory);
         }
         // 查询某个二级shopCategory下面的店铺列表
-        if (shopCategoryId != 1L) {
+        if (shopCategoryId != -1L) {
             ShopCategory shopCategory = new ShopCategory();
             shopCategory.setShopCategoryId(shopCategoryId);
             shopCondition.setShopCategory(shopCategory);
