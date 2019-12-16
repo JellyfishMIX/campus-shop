@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(value = "/api/local")
+@RequestMapping(value = "/api/localauth")
 public class LocalAuthController {
     @Autowired
     private LocalAuthService localAuthService;

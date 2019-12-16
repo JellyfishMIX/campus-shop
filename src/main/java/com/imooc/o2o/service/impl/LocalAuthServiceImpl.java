@@ -39,6 +39,24 @@ public class LocalAuthServiceImpl implements LocalAuthService {
         return localAuthDao.queryLocalAuthByUserId(userId);
     }
 
+    // public LocalAuthExecution AddLocalAuth(LocalAuth localAuth) throws LocalAuthOperationException {
+    //     // 空值判断，传入传入localAuth账号密码，均不能为空，否则直接返回报错
+    //     if (localAuth == null || localAuth.getUsername() == null || localAuth.getPassword() == null) {
+    //         return new LocalAuthExecution(LocalAuthStateEnum.NULL_AUTH_INFO);
+    //     }
+    //     // 查询此用户是否已经注册过平台账号
+    //     LocalAuth tempLocalAuth = localAuthDao.queryLocalAuthByUserNameAndPassword(localAuth.getUsername(), MD5.getMd5(localAuth.getPassword()));
+    //     // 如果注册过则直接退出，以保证平台账号的唯一性
+    //     if (tempLocalAuth != null) {
+    //         return new LocalAuthExecution(LocalAuthStateEnum.ONLY_ONE_ACCOUNT);
+    //     }
+    //     try {
+    //         // 如果之前没有注册过账号，则创建一个平台账号
+    //         localAuth.setCreateTime(new Date());
+    //         localAuth.setLastEditTime(new Date());
+    //     }
+    // }
+
     /**
      * 绑定微信生成平台专属的账号
      * @param localAuth
@@ -48,7 +66,7 @@ public class LocalAuthServiceImpl implements LocalAuthService {
     @Override
     @Transactional
     public LocalAuthExecution bindLocalAuth(LocalAuth localAuth) throws LocalAuthOperationException {
-        // 空值判断，传入localAuth账号密码，用户信息特别是userId不能为空，否则直接返回错误
+        // 空值判断，传入localAuth账号密码，用户信息特别是userId不能为空，否则直接返回报错
         if (localAuth == null || localAuth.getUsername() == null || localAuth.getPassword() == null || localAuth.getPersonInfo() == null || localAuth.getPersonInfo().getUserId() == null) {
             return new LocalAuthExecution(LocalAuthStateEnum.NULL_AUTH_INFO);
         }
