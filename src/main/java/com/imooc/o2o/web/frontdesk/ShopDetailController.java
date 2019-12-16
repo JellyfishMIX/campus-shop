@@ -34,7 +34,7 @@ public class ShopDetailController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/listshopdetailpageinfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/listshopdetailpageinfo", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> listShopDetailPageInfo(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
@@ -57,7 +57,12 @@ public class ShopDetailController {
         }
     }
 
-    @RequestMapping(value = "/listproductsbyshop", method = RequestMethod.POST)
+    /**
+     * 展示当前店铺的商品
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/listproductsbyshop", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> listProductsByShop(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
