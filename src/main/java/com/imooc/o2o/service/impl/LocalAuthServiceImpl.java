@@ -58,7 +58,6 @@ public class LocalAuthServiceImpl implements LocalAuthService {
         if (tempLocalAuth != null) {
             return new LocalAuthExecution(LocalAuthStateEnum.ONLY_ONE_ACCOUNT);
         }
-
         try {
             // 如果之前没有注册过账号，则创建一个平台账号
             localAuth.setCreateTime(new Date());

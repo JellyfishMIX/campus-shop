@@ -1,10 +1,13 @@
 package com.imooc.o2o.web.local;
 
 import com.imooc.o2o.dto.LocalAuthExecution;
+import com.imooc.o2o.dto.PersonInfoExecution;
 import com.imooc.o2o.entity.LocalAuth;
 import com.imooc.o2o.entity.PersonInfo;
 import com.imooc.o2o.enums.LocalAuthStateEnum;
+import com.imooc.o2o.enums.PersonInfoStateEnum;
 import com.imooc.o2o.service.LocalAuthService;
+import com.imooc.o2o.service.PersonInfoService;
 import com.imooc.o2o.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +24,8 @@ import java.util.Map;
 public class LocalAuthController {
     @Autowired
     private LocalAuthService localAuthService;
+    @Autowired
+    private PersonInfoService personInfoService;
 
     @RequestMapping(value = "registerLocalAuth", method = RequestMethod.POST)
     @ResponseBody
@@ -33,21 +38,32 @@ public class LocalAuthController {
         String password = HttpServletRequestUtil.getString(request, "password");
         // 非空判断，要求账号和密码非空
         if (username != null && password != null) {
-            LocalAuth localAuth = new LocalAuth();
-            localAuth.setUsername(username);
-            localAuth.setPassword(password);
-            LocalAuthExecution localAuthExecution = localAuthService.AddLocalAuth(localAuth);
-            if (localAuthExecution.getState() == LocalAuthStateEnum.SUCCESS.getState()) {
-                // 账户创建操作成功，同时创建用户信息
-                PersonInfo personInfo = new PersonInfo();
+            // 先创建PersonInfo
+            PersonInfo personInfo = new PersonInfo();
+            personInfo.setName("personInfoName");
+            PersonInfoExecution personInfoExecution = personInfoService.addPersonInfo(personInfo);
 
+            if (personInfoExecution.getState() == PersonInfoStateEnum.SUCCESS.getState()) {
+                // 创建本地账号
+                LocalAuth localAuth = new LocalAuth();
+                localAuth.setUsername(username);
+                localAuth.setPassword(password);
+                localAuth.setPersonInfo(personInfoExecution.getPersonInfo());
+                LocalAuthExecution localAuthExecution = localAuthService.AddLocalAuth(localAuth);
 
-                modelMap.put("success", true);
-                return modelMap;
+                if (localAuthExecution.getState() == LocalAuthStateEnum.SUCCESS.getState()) {
+                    modelMap.put("success", true);
+                    return modelMap;
+                } else {
+                    modelMap.put("success", false);
+                    modelMap.put("errState", localAuthExecution.getState());
+                    modelMap.put("errStateInfo", localAuthExecution.getStateInfo());
+                    return modelMap;
+                }
             } else {
                 modelMap.put("success", false);
-                modelMap.put("errState", localAuthExecution.getState());
-                modelMap.put("errStateInfo", localAuthExecution.getStateInfo());
+                modelMap.put("errState", personInfoExecution.getState());
+                modelMap.put("errStateInfo", personInfoExecution.getStateInfo());
                 return modelMap;
             }
         } else {
