@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class LocalAuthController {
     @Autowired
     private PersonInfoService personInfoService;
 
-    @RequestMapping(value = "registerLocalAuth", method = RequestMethod.POST)
+    @RequestMapping(value = "/registerLocalAuth", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerLocalAuth(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
@@ -41,6 +42,10 @@ public class LocalAuthController {
             // 先创建PersonInfo
             PersonInfo personInfo = new PersonInfo();
             personInfo.setName("personInfoName");
+            personInfo.setEnableStatus(1);
+            personInfo.setUserType(1);
+            personInfo.setCreateTime(new Date());
+            personInfo.setLastEditTime(new Date());
             PersonInfoExecution personInfoExecution = personInfoService.addPersonInfo(personInfo);
 
             if (personInfoExecution.getState() == PersonInfoStateEnum.SUCCESS.getState()) {
@@ -78,7 +83,7 @@ public class LocalAuthController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "bindLocalAuth", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/bindLocalAuth", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     private Map<String, Object> bindLocalAuth(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
@@ -196,6 +201,28 @@ public class LocalAuthController {
         } else {
             modelMap.put("success", false);
             modelMap.put("errMsg", "用户名和密码均不能为空");
+            return modelMap;
+        }
+    }
+
+    /**
+     * 检查用户名是否已被注册
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/checkusername", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> checkUsername(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<>();
+        String username = HttpServletRequestUtil.getString(request, "username");
+        LocalAuthExecution localAuthExecution = localAuthService.checkUsername(username);
+        if (localAuthExecution.getState() == LocalAuthStateEnum.ONLY_ONE_ACCOUNT.getState()) {
+            modelMap.put("success", false);
+            modelMap.put("errState", localAuthExecution.getState());
+            modelMap.put("errStateInfo", localAuthExecution.getStateInfo());
+            return modelMap;
+        } else {
+            modelMap.put("success", true);
             return modelMap;
         }
     }

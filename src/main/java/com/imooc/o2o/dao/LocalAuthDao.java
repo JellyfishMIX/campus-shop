@@ -12,7 +12,7 @@ public interface LocalAuthDao {
      * @param password
      * @return
      */
-    LocalAuth queryLocalAuthByUserNameAndPassword(@Param("username") String username, @Param("password") String password);
+    LocalAuth queryLocalAuthByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     /**
      * 通过用户Id查询对应localAuth
@@ -37,5 +37,12 @@ public interface LocalAuthDao {
      * @param lastEditTime
      * @return
      */
-    int updateLocalAuth(@Param("userId") Long userId, @Param("username") String username, @Param("password") String password, @Param("newPassword") String newPassword, @Param("lastEditTime")Date lastEditTime);
+    int updateLocalAuth(@Param("userId") long userId, @Param("username") String username, @Param("password") String password, @Param("newPassword") String newPassword, @Param("lastEditTime")Date lastEditTime);
+
+    /**
+     * 通过username查询对应信息
+     * @param username
+     * @return
+     */
+    LocalAuth queryLocalAuthByUsername(@Param("username") String username);
 }

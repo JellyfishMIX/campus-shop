@@ -26,7 +26,7 @@ public class LocalAuthServiceImpl implements LocalAuthService {
      */
     @Override
     public LocalAuth getLocalAuthByUserNameAndPassword(String username, String password) {
-        return localAuthDao.queryLocalAuthByUserNameAndPassword(username, MD5.getMd5(password));
+        return localAuthDao.queryLocalAuthByUsernameAndPassword(username, MD5.getMd5(password));
     }
 
     /**
@@ -53,7 +53,7 @@ public class LocalAuthServiceImpl implements LocalAuthService {
             return new LocalAuthExecution(LocalAuthStateEnum.NULL_AUTH_INFO);
         }
         // 查询此用户是否已经注册过平台账号
-        LocalAuth tempLocalAuth = localAuthDao.queryLocalAuthByUserNameAndPassword(localAuth.getUsername(), MD5.getMd5(localAuth.getPassword()));
+        LocalAuth tempLocalAuth = localAuthDao.queryLocalAuthByUsernameAndPassword(localAuth.getUsername(), MD5.getMd5(localAuth.getPassword()));
         // 如果注册过则直接退出，以保证平台账号的唯一性
         if (tempLocalAuth != null) {
             return new LocalAuthExecution(LocalAuthStateEnum.ONLY_ONE_ACCOUNT);
@@ -124,9 +124,9 @@ public class LocalAuthServiceImpl implements LocalAuthService {
      */
     @Override
     @Transactional
-    public LocalAuthExecution modifyLocalAuth(Long userId, String username, String password, String newPassword) throws LocalAuthOperationException {
+    public LocalAuthExecution modifyLocalAuth(long userId, String username, String password, String newPassword) throws LocalAuthOperationException {
         // 非空判断，判断传入的用户Id，账号，新旧密码是否相同，若不满足条件则返回错误信息
-        if (userId != null && username != null && password != null && newPassword != null && !password.equals(newPassword)) {
+        if (userId != -1L && username != null && password != null && newPassword != null && !password.equals(newPassword)) {
             try {
                 // 更改密码，对新密码进行MD5加密
                 int effectedNum = localAuthDao.updateLocalAuth(userId, username, MD5.getMd5(password), MD5.getMd5(newPassword), new Date());
@@ -140,6 +140,21 @@ public class LocalAuthServiceImpl implements LocalAuthService {
             }
         } else {
             return new LocalAuthExecution(LocalAuthStateEnum.NULL_AUTH_INFO);
+        }
+    }
+
+    /**
+     * 检查用户名是否已被注册
+     * @param username
+     * @return
+     */
+    @Override
+    public LocalAuthExecution checkUsername(String username) {
+        LocalAuth localAuth = localAuthDao.queryLocalAuthByUsername(username);
+        if (localAuth != null) {
+            return new LocalAuthExecution(LocalAuthStateEnum.ONLY_ONE_ACCOUNT);
+        } else {
+            return new LocalAuthExecution(LocalAuthStateEnum.NOT_FOUND);
         }
     }
 }

@@ -38,7 +38,7 @@ public class LocalAuthDaoTest extends BaseTest {
     @Ignore
     public void testQueryLocalByUserNameAndPwd() throws Exception {
         // 按照账号和密码查询用户信息
-        LocalAuth localAuth = localAuthDao.queryLocalAuthByUserNameAndPassword(username, password);
+        LocalAuth localAuth = localAuthDao.queryLocalAuthByUsernameAndPassword(username, password);
         Assert.assertEquals("张全蛋", localAuth.getPersonInfo().getName());
     }
 

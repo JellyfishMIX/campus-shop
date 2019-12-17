@@ -3,6 +3,7 @@ package com.imooc.o2o.service;
 import com.imooc.o2o.dto.LocalAuthExecution;
 import com.imooc.o2o.entity.LocalAuth;
 import com.imooc.o2o.exceptions.LocalAuthOperationException;
+import org.springframework.cglib.core.Local;
 
 public interface LocalAuthService {
     /**
@@ -45,5 +46,12 @@ public interface LocalAuthService {
      * @return
      * @throws LocalAuthOperationException
      */
-    LocalAuthExecution modifyLocalAuth(Long userId, String username, String password, String newPassword) throws LocalAuthOperationException;
+    LocalAuthExecution modifyLocalAuth(long userId, String username, String password, String newPassword) throws LocalAuthOperationException;
+
+    /**
+     * 检查用户名是否已被注册
+     * @param username
+     * @return
+     */
+    LocalAuthExecution checkUsername(String username);
 }
