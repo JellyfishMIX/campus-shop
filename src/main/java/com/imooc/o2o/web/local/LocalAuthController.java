@@ -22,6 +22,41 @@ public class LocalAuthController {
     @Autowired
     private LocalAuthService localAuthService;
 
+    @RequestMapping(value = "registerLocalAuth", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> registerLocalAuth(HttpServletRequest request) {
+        Map<String, Object> modelMap = new HashMap<>();
+
+        // 获取输入的用户名
+        String username = HttpServletRequestUtil.getString(request, "username");
+        // 获取输入的密码
+        String password = HttpServletRequestUtil.getString(request, "password");
+        // 非空判断，要求账号和密码非空
+        if (username != null && password != null) {
+            LocalAuth localAuth = new LocalAuth();
+            localAuth.setUsername(username);
+            localAuth.setPassword(password);
+            LocalAuthExecution localAuthExecution = localAuthService.AddLocalAuth(localAuth);
+            if (localAuthExecution.getState() == LocalAuthStateEnum.SUCCESS.getState()) {
+                // 账户创建操作成功，同时创建用户信息
+                PersonInfo personInfo = new PersonInfo();
+
+
+                modelMap.put("success", true);
+                return modelMap;
+            } else {
+                modelMap.put("success", false);
+                modelMap.put("errState", localAuthExecution.getState());
+                modelMap.put("errStateInfo", localAuthExecution.getStateInfo());
+                return modelMap;
+            }
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "账号和密码存在空值");
+            return modelMap;
+        }
+    }
+
     /**
      * 将用户信息与平台账号绑定
      * @param request

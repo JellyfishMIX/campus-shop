@@ -15,7 +15,7 @@ public class PersonInfo {
     private Date createTime;    // 创建时间
     private Date lastEditTime;  // 最后一次编辑时间
 
-//    Getter and Setter
+    // Getter and Setter
     public Long getUserId() {
         return userId;
     }

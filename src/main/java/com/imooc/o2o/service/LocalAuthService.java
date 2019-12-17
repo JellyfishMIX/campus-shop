@@ -20,13 +20,13 @@ public interface LocalAuthService {
      */
     LocalAuth getLocalAuthByUserId(long userId);
 
-    // /**
-    //  * 注册一个本地账户
-    //  * @param localAuth
-    //  * @return
-    //  * @throws LocalAuthOperationException
-    //  */
-    // LocalAuth AddLocalAuth(LocalAuth localAuth) throws LocalAuthOperationException;
+    /**
+     * 新增一个本地账户
+     * @param localAuth
+     * @return
+     * @throws LocalAuthOperationException
+     */
+    LocalAuthExecution AddLocalAuth(LocalAuth localAuth) throws LocalAuthOperationException;
 
     /**
      * 绑定微信生成平台专属的账号

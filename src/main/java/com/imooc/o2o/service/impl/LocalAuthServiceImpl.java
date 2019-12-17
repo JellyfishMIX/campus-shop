@@ -39,23 +39,43 @@ public class LocalAuthServiceImpl implements LocalAuthService {
         return localAuthDao.queryLocalAuthByUserId(userId);
     }
 
-    // public LocalAuthExecution AddLocalAuth(LocalAuth localAuth) throws LocalAuthOperationException {
-    //     // 空值判断，传入传入localAuth账号密码，均不能为空，否则直接返回报错
-    //     if (localAuth == null || localAuth.getUsername() == null || localAuth.getPassword() == null) {
-    //         return new LocalAuthExecution(LocalAuthStateEnum.NULL_AUTH_INFO);
-    //     }
-    //     // 查询此用户是否已经注册过平台账号
-    //     LocalAuth tempLocalAuth = localAuthDao.queryLocalAuthByUserNameAndPassword(localAuth.getUsername(), MD5.getMd5(localAuth.getPassword()));
-    //     // 如果注册过则直接退出，以保证平台账号的唯一性
-    //     if (tempLocalAuth != null) {
-    //         return new LocalAuthExecution(LocalAuthStateEnum.ONLY_ONE_ACCOUNT);
-    //     }
-    //     try {
-    //         // 如果之前没有注册过账号，则创建一个平台账号
-    //         localAuth.setCreateTime(new Date());
-    //         localAuth.setLastEditTime(new Date());
-    //     }
-    // }
+    /**
+     * 新增一个本地账户
+     * @param localAuth
+     * @return
+     * @throws LocalAuthOperationException
+     */
+    @Override
+    @Transactional
+    public LocalAuthExecution AddLocalAuth(LocalAuth localAuth) throws LocalAuthOperationException {
+        // 空值判断，传入传入localAuth账号密码，均不能为空，否则直接返回报错
+        if (localAuth == null || localAuth.getUsername() == null || localAuth.getPassword() == null) {
+            return new LocalAuthExecution(LocalAuthStateEnum.NULL_AUTH_INFO);
+        }
+        // 查询此用户是否已经注册过平台账号
+        LocalAuth tempLocalAuth = localAuthDao.queryLocalAuthByUserNameAndPassword(localAuth.getUsername(), MD5.getMd5(localAuth.getPassword()));
+        // 如果注册过则直接退出，以保证平台账号的唯一性
+        if (tempLocalAuth != null) {
+            return new LocalAuthExecution(LocalAuthStateEnum.ONLY_ONE_ACCOUNT);
+        }
+
+        try {
+            // 如果之前没有注册过账号，则创建一个平台账号
+            localAuth.setCreateTime(new Date());
+            localAuth.setLastEditTime(new Date());
+            // 对密码进行MD5加密
+            localAuth.setPassword(MD5.getMd5(localAuth.getPassword()));
+            int effectedNum = localAuthDao.insertLocalAuth(localAuth);
+            // 判断是否创建成功
+            if (effectedNum < 0) {
+                throw new LocalAuthOperationException("账号绑定失败");
+            } else {
+                return new LocalAuthExecution(LocalAuthStateEnum.SUCCESS);
+            }
+        } catch (Exception e) {
+            throw new LocalAuthOperationException("insertLocalAuth error: " + e.getMessage());
+        }
+    }
 
     /**
      * 绑定微信生成平台专属的账号
@@ -71,9 +91,9 @@ public class LocalAuthServiceImpl implements LocalAuthService {
             return new LocalAuthExecution(LocalAuthStateEnum.NULL_AUTH_INFO);
         }
         // 查询此用户是否已绑定过平台账号
-        LocalAuth tempAuth = localAuthDao.queryLocalAuthByUserId(localAuth.getPersonInfo().getUserId());
+        LocalAuth tempLocalAuth = localAuthDao.queryLocalAuthByUserId(localAuth.getPersonInfo().getUserId());
         // 如果绑定过则直接退出，以保证平台账号的唯一性
-        if (tempAuth != null) {
+        if (tempLocalAuth != null) {
             return new LocalAuthExecution(LocalAuthStateEnum.ONLY_ONE_ACCOUNT);
         }
         try {
