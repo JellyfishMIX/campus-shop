@@ -11,6 +11,7 @@ import com.imooc.o2o.service.PersonInfoService;
 import com.imooc.o2o.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -134,8 +135,12 @@ public class LocalAuthController {
         String password = HttpServletRequestUtil.getString(request, "password");
         // 获取新密码
         String newPassword = HttpServletRequestUtil.getString(request, "newPassword");
+
+        PersonInfo user = new PersonInfo();
+        user.setUserId(1L);
+        request.getSession().setAttribute("user", user);
         // 从session中获取当前用户信息（用户一旦通过微信登录后，便能获取用户信息）
-        PersonInfo user = (PersonInfo) request.getSession().getAttribute("user");
+        // PersonInfo user = (PersonInfo) request.getSession().getAttribute("user");
         // 非空判断，要求账号新旧密码即当前的用户session非空，且新密码与旧密码不相同
         if (username != null && password != null && newPassword != null && user != null && user.getUserId() != null && !password.equals(newPassword)) {
             try {

@@ -70,7 +70,7 @@ $(function() {
 	// 退出登录
 	$('#log-out').click(function () {
 		$.ajax({
-			url : "/o2o/user/logout",
+			url : "/o2o/api/localauth/logout",
 			type : "post",
 			contentType : false,
 			processData : false,

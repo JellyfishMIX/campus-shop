@@ -45,7 +45,7 @@ public class MainPageController {
         }
 
         // 获取头条列表
-        List<HeadLine> headLineList = new ArrayList<>();
+        List<HeadLine> headLineList;
         try {
             // 获取状态为可用（1）的头条列表
             HeadLine headLineCondition = new HeadLine();
