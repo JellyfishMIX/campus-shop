@@ -15,11 +15,11 @@
             <result property="name" column="name" />
             <result property="gender" column="gender" />
             <result property="email" column="email" />
-            <result property="profile_img" column="profileImg" />
+            <result property="profileImg" column="profile_img" />
             <result property="userType" column="user_type" />
-            <result property="createTime" column="create_time" />
-            <result property="lastEditTime" column="last_edit_time" />
-            <result property="enable_status" column="enableStatus" />
+            <result property="createTime" column="person_info_create_time" />
+            <result property="lastEditTime" column="person_info_last_edit_time" />
+            <result property="enableStatus" column="enable_status" />
         </association>
     </resultMap>
     <select id="queryLocalAuthByUsernameAndPassword" resultMap="localAuthResultMap" parameterType="String">
@@ -35,8 +35,8 @@
         tb_person_info.email,
         tb_person_info.profile_img,
         tb_person_info.user_type,
-        tb_person_info.create_time,
-        tb_person_info.last_edit_time,
+        tb_person_info.create_time as person_info_create_time,
+        tb_person_info.last_edit_time as person_info_last_edit_time,
         tb_person_info.enable_status
         from
         tb_local_auth
@@ -63,8 +63,8 @@
         tb_person_info.email,
         tb_person_info.profile_img,
         tb_person_info.user_type,
-        tb_person_info.create_time,
-        tb_person_info.last_edit_time,
+        tb_person_info.create_time as person_info_create_time,
+        tb_person_info.last_edit_time as person_info_last_edit_time,
         tb_person_info.enable_status
         from
         tb_local_auth
@@ -108,8 +108,8 @@
         tb_person_info.email,
         tb_person_info.profile_img,
         tb_person_info.user_type,
-        tb_person_info.create_time,
-        tb_person_info.last_edit_time,
+        tb_person_info.create_time as person_info_create_time,
+        tb_person_info.last_edit_time as person_info_last_edit_time,
         tb_person_info.enable_status
         from
         tb_local_auth

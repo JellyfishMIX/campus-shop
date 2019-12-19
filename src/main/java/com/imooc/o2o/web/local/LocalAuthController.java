@@ -28,6 +28,11 @@ public class LocalAuthController {
     @Autowired
     private PersonInfoService personInfoService;
 
+    /**
+     * 注册本地账户
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/registerLocalAuth", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerLocalAuth(HttpServletRequest request) {

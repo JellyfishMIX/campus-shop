@@ -27,11 +27,15 @@ public class ShopLoginInterceptor extends HandlerInterceptorAdapter {
                 // 若通过验证则返回true，拦截器返回true之后，用户接下来的操作得以正常进行
                 return true;
             } else {
-                // 若不满足登录验证，则直接跳转到账号登录页面
+                // 若不满足拦截器的验证则返回false，终止用户操作的执行，跳转后台用户登录页面
+                String loginUrl = request.getContextPath() + "/admin/login";
+                response.sendRedirect(loginUrl);
                 return false;
             }
         } else {
-            // 若不满足登录验证，则直接跳转到账号登录页面
+            // 若不满足拦截器的验证则返回false，终止用户操作的执行，跳转后台用户登录页面
+            String loginUrl = request.getContextPath() + "/admin/login";
+            response.sendRedirect(loginUrl);
             return false;
         }
     }

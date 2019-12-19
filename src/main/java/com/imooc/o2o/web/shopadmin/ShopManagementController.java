@@ -241,9 +241,9 @@ public class ShopManagementController {
     private Map<String, Object> getShopListAndCount(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
         PersonInfo user = new PersonInfo();
-        user.setUserId(1L);
-        user.setName("test");
-        request.getSession().setAttribute("user", user);
+        // user.setUserId(1L);
+        // user.setName("张全蛋");
+        // request.getSession().setAttribute("user", user);
         user = (PersonInfo) request.getSession().getAttribute("user");
         try {
             Shop shopCondition = new Shop();
@@ -278,17 +278,19 @@ public class ShopManagementController {
             if (currentShopObj == null) {
                 modelMap.put("redirect", true);
                 modelMap.put("url", "/o2o/shop/shoplist");
+                return modelMap;
             } else {
                 Shop currentShop = (Shop) currentShopObj;
                 modelMap.put("redirect", false);
                 modelMap.put("shopId", currentShop.getShopId());
+                return modelMap;
             }
         } else {
             Shop currentShop = new Shop();
             currentShop.setShopId(shopId);
             request.getSession().setAttribute("currentShop", currentShop);
             modelMap.put("redirect", false);
+            return modelMap;
         }
-        return modelMap;
     }
 }

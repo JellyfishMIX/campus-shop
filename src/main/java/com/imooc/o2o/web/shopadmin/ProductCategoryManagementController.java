@@ -40,15 +40,16 @@ public class ProductCategoryManagementController {
         List<ProductCategory> productCategoryList;
         if (currentShop != null && currentShop.getShopId() > 0) {
             productCategoryList = productCategoryService.getProductCategoryList(currentShop.getShopId());
-            modelMap.put("success", false);
+            modelMap.put("success", true);
             modelMap.put("productCategoryList", productCategoryList);
+            return modelMap;
         } else {
             ProductCategoryStateEnum productCategoryStateEnum = ProductCategoryStateEnum.INNER_ERROR;
             modelMap.put("success", false);
             modelMap.put("errState", productCategoryStateEnum.getState());
             modelMap.put("errStateInfo", productCategoryStateEnum.getStateInfo());
+            return modelMap;
         }
-        return modelMap;
     }
 
     /**
