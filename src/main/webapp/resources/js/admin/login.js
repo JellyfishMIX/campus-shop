@@ -1,5 +1,5 @@
 $(function() {
-	var userType = getQueryString('userType');
+	// var userType = getQueryString('userType');
 	var loginUrl = '/o2o/api/localauth/logincheck';
 	var loginCount = 0;
 
@@ -26,8 +26,7 @@ $(function() {
 				username : username,
 				password : password,
 				verifyCodeActual : verifyCodeActual,
-				needVerify : needVerify,
-				userType : userType
+				needVerify : needVerify
 			},
 			success : function(data) {
 				if (data.success) {
@@ -39,24 +38,24 @@ $(function() {
 					// 没有后台登录权限
 					if (data.errMsg) {
 						$.toast(data.errMsg);
-						// 延时3秒
+						// 延时2秒
 						setTimeout(function() {
 							window.location.href = '/o2o/frontdesk/index';
-						}, 3000);
+						}, 2000);
 					}
-					// 仅当有权限登录成功且链接中带有back属性时跳转后台
-					else if (userType == "back") {
-						// 延时3秒
+					// 仅当有权限登录成功且userType == 2时(商家账户)跳转后台
+					else if (data.userType == 2) {
+						// 延时2秒
 						setTimeout(function() {
 							window.location.href = '/o2o/shopadmin/shoplist';
-						}, 3000);
+						}, 2000);
 					}
 					// 登录成功的其他情况都跳转前台
 					else {
-						// 延时3秒
+						// 延时2秒
 						setTimeout(function() {
 							window.location.href = '/o2o/frontdesk/index';
-						}, 3000);
+						}, 2000);
 					}
 				} else {
 					$.toast(data.errMsg);
@@ -70,6 +69,6 @@ $(function() {
 	});
 
 	$('#register').click(function() {
-		window.location.href = '/o2o/admin/register?userType=back';
+		window.location.href = '/o2o/admin/register';
 	});
 });

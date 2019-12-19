@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ public class AreaController {
         logger.info("===start===");
         long startTime = System.currentTimeMillis();
 
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
         List<Area> list;
 
         try {

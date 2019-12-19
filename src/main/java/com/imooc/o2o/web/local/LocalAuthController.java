@@ -11,7 +11,6 @@ import com.imooc.o2o.service.PersonInfoService;
 import com.imooc.o2o.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -193,11 +192,19 @@ public class LocalAuthController {
             // 传入账号和密码去获取平台账号信息
             LocalAuth localAuth = localAuthService.getLocalAuthByUserNameAndPassword(username, password);
             if (localAuth != null) {
-                // 若能获取到账号信息则为登录成功
-                modelMap.put("success", true);
-                // 同时在Session中设置用户信息
-                request.getSession().setAttribute("user", localAuth.getPersonInfo());
-                return modelMap;
+                // 提取账户对应的个人信息：userType，供前端判断分身跳转至不同页面
+                if (localAuth.getPersonInfo() != null) {
+                    // 若能获取到账户信息和个人信息则为登录成功
+                    modelMap.put("success", true);
+                    modelMap.put("userType", localAuth.getPersonInfo().getUserType());
+                    // 同时在Session中设置用户信息
+                    request.getSession().setAttribute("user", localAuth.getPersonInfo());
+                    return modelMap;
+                } else {
+                    modelMap.put("success", false);
+                    modelMap.put("errMsg", "此localAuth未绑定个人信息");
+                    return modelMap;
+                }
             } else {
                 modelMap.put("success", false);
                 modelMap.put("errMsg", "用户名和密码均不能为空");

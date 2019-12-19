@@ -31,7 +31,9 @@ public class ShopPermissionInterceptor extends HandlerInterceptorAdapter {
                 }
             }
         }
-        // 若不满足拦截器的验证则返回false，终止用户操作的执行
+        // 若不满足拦截器的验证则返回false，终止用户操作的执行，跳转后台用户登录页面
+        String loginUrl = request.getContextPath() + "/admin/login";
+        response.sendRedirect(loginUrl);
         return false;
     }
 }

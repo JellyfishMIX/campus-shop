@@ -46,7 +46,7 @@ public class ShopManagementController {
     @RequestMapping(value = "/getshopinitinfo", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopInitInfo() {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
         List<ShopCategory> shopCategoryList;
         List<Area> areaList;
         try {
@@ -55,11 +55,12 @@ public class ShopManagementController {
             modelMap.put("shopCategoryList", shopCategoryList);
             modelMap.put("areaList", areaList);
             modelMap.put("success", true);
+            return modelMap;
         } catch (Exception e) {
             modelMap.put("success", false);
             modelMap.put("errMsg", e.getMessage());
+            return modelMap;
         }
-        return modelMap;
     }
 
     /**
@@ -72,7 +73,7 @@ public class ShopManagementController {
     @RequestMapping(value = "/registershop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> registerShop(HttpServletRequest request) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
 
         // 1.接收并转化相应的逻辑，包括店铺信息及图片信息
         String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
@@ -143,7 +144,7 @@ public class ShopManagementController {
     @RequestMapping(value = "/getshopbyshopid", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopByShopId(HttpServletRequest request) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
         Long shopId = HttpServletRequestUtil.getLong(request, "shopId");
         if (shopId > -1) {
             try {
@@ -171,7 +172,7 @@ public class ShopManagementController {
     @RequestMapping(value = "/updateShop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> updateShop(HttpServletRequest request) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
 
         // 1.接收并转化相应的逻辑，包括店铺信息及图片信息
         String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
@@ -238,7 +239,7 @@ public class ShopManagementController {
     @RequestMapping(value = "/getshoplist", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopListAndCount(HttpServletRequest request) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
         PersonInfo user = new PersonInfo();
         user.setUserId(1L);
         user.setName("test");
@@ -247,18 +248,19 @@ public class ShopManagementController {
         try {
             Shop shopCondition = new Shop();
             shopCondition.setOwner(user);
-            ShopExecution shopExecution = shopService.getShopListAndCount(shopCondition, 0, 100);
+            ShopExecution shopExecution = shopService.getShopListAndCount(shopCondition, 0, 8);
 
             // 列出店铺列表成功后，将店铺放入session中作为权限验证依据，即该账号只能操作它自己的店铺
             request.getSession().setAttribute("shopList", shopExecution.getShopList());
             modelMap.put("success", true);
             modelMap.put("shopList", shopExecution.getShopList());
             modelMap.put("user", user);
+            return modelMap;
         } catch (Exception e) {
             modelMap.put("success", false);
             modelMap.put("errMsg", e.toString());
+            return modelMap;
         }
-        return modelMap;
     }
 
     /**
@@ -269,7 +271,7 @@ public class ShopManagementController {
     @RequestMapping(value = "/getshopmanagementinfo", method = RequestMethod.GET)
     @ResponseBody
     private Map<String, Object> getShopManagementInfo(HttpServletRequest request) {
-        Map<String, Object> modelMap = new HashMap<String, Object>();
+        Map<String, Object> modelMap = new HashMap<>();
         long shopId = HttpServletRequestUtil.getLong(request, "shopId");
         if (shopId < 0) {
             Object currentShopObj = request.getSession().getAttribute("currentShop");
