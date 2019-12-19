@@ -61,10 +61,12 @@ public class ProductCategoryManagementController {
     @ResponseBody
     private Map<String, Object> batchAddProductCategory(@RequestBody List<ProductCategory> productCategoryList, HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<String, Object>();
+        // 给productCategoryList中的productCategory设置上当前店铺的Id
         Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
         for (ProductCategory productCategory:productCategoryList) {
             productCategory.setShopId(currentShop.getShopId());
         }
+
         if (productCategoryList != null && productCategoryList.size() > 0) {
             try {
                 ProductCategoryExecution productCategoryExecution = productCategoryService.batchAddProductCategory(productCategoryList);

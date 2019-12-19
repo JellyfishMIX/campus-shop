@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,6 +41,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Transactional
     public ProductCategoryExecution batchAddProductCategory(List<ProductCategory> productCategoryList) throws ProductCategoryOperationException {
         if (productCategoryList != null && productCategoryList.size() > 0) {
+            // 给每个productCategory设置创建日期
+            for (ProductCategory productCategory:productCategoryList) {
+                productCategory.setCreateTime(new Date());
+            }
+
             try {
                 int effectedNum = productCategoryDao.batchInsertProductCategory(productCategoryList);
                 if (effectedNum <= 0) {
