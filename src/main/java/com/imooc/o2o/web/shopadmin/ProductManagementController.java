@@ -215,6 +215,8 @@ public class ProductManagementController {
             String productStr = HttpServletRequestUtil.getString(request, "productStr");
             // 尝试获取前端传过来的表单String流并将其转换成Product实体类
             product = mapper.readValue(productStr, Product.class);
+            product.setProductName(new String(product.getProductName().getBytes("8859_1"), "utf8"));
+            product.setProductDesc(new String(product.getProductDesc().getBytes("8859_1"), "utf8"));
         } catch (Exception e) {
             modelMap.put("success", false);
             modelMap.put("errMsg", e.toString());

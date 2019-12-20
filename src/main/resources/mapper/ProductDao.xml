@@ -80,7 +80,7 @@
             <if test="productDesc != null">product_desc = #{productDesc},</if>
             <if test="imgAddr">img_addr = #{imgAddr},</if>
             <if test="normalPrice != null">normal_price = #{normalPrice},</if>
-            <if test="promotionPrice != null">normal_price = #{promotionPrice},</if>
+            <if test="promotionPrice != null">promotion_price = #{promotionPrice},</if>
             <if test="priority != null">priority = #{priority},</if>
             <if test="lastEditTime != null">last_edit_time = #{lastEditTime},</if>
             <if test="enableStatus != null">enable_status = #{enableStatus},</if>
