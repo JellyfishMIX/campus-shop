@@ -31,7 +31,7 @@ public interface ShopService {
      * @return
      * @throws ShopOperationException
      */
-    ShopExecution updateShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
+    ShopExecution modifyShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException;
 
     /**
      * 根据shopCondition分页返回列表数据和店铺总数

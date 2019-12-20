@@ -169,9 +169,9 @@ public class ShopManagementController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/updateShop", method = RequestMethod.POST)
+    @RequestMapping(value = "/modifyShop", method = RequestMethod.POST)
     @ResponseBody
-    private Map<String, Object> updateShop(HttpServletRequest request) {
+    private Map<String, Object> modifyShop(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
 
         // 1.接收并转化相应的逻辑，包括店铺信息及图片信息
@@ -206,7 +206,7 @@ public class ShopManagementController {
                 if (shopImg == null) {
                     imageHolder.setImageName(null);
                     imageHolder.setImage(null);
-                    shopExecution = shopService.updateShop(shop, imageHolder);
+                    shopExecution = shopService.modifyShop(shop, imageHolder);
                 } else {
                     imageHolder.setImageName(shopImg.getOriginalFilename());
                     imageHolder.setImage(shopImg.getInputStream());

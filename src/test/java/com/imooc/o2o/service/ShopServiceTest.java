@@ -63,7 +63,7 @@ public class ShopServiceTest extends BaseTest {
         File shopImg = new File("/Users/qianshijie/Programming/Backend/Java/Images/o2o/dabai.jpg");
         InputStream shopImgInputStream = new FileInputStream(shopImg);
         ImageHolder imageHolder = new ImageHolder("dabai.jpg", shopImgInputStream);
-        ShopExecution shopExecution = shopService.updateShop(shop, imageHolder);
+        ShopExecution shopExecution = shopService.modifyShop(shop, imageHolder);
     }
 
     @Test

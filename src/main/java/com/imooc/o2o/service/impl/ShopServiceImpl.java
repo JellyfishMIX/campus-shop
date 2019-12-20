@@ -84,7 +84,7 @@ public class ShopServiceImpl implements ShopService {
      * @throws ShopOperationException
      */
     @Override
-    public ShopExecution updateShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException {
+    public ShopExecution modifyShop(Shop shop, ImageHolder imageHolder) throws ShopOperationException {
         if (shop == null || shop.getShopId() == null) {
             return new ShopExecution(ShopStateEnum.NULL_SHOP);
         } else {

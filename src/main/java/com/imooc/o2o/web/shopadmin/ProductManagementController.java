@@ -7,6 +7,7 @@ import com.imooc.o2o.entity.Product;
 import com.imooc.o2o.entity.ProductCategory;
 import com.imooc.o2o.entity.Shop;
 import com.imooc.o2o.enums.ProductStateEnum;
+import com.imooc.o2o.service.ProductCategoryService;
 import com.imooc.o2o.service.ProductService;
 import com.imooc.o2o.util.CodeUtil;
 import com.imooc.o2o.util.HttpServletRequestUtil;
@@ -31,6 +32,8 @@ import java.util.Map;
 public class ProductManagementController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductCategoryService productCategoryService;
 
     // 支持上传商品详情图的最大数量
     private static final int IMAGE_MAX_COUNT = 6;
@@ -131,20 +134,25 @@ public class ProductManagementController {
      */
     @RequestMapping(value = "/getproductbyproductid", method = RequestMethod.GET)
     @ResponseBody
-    private Map<String, Object> getProductByProductId(@RequestParam Long productId) {
+    private Map<String, Object> getProductByProductId(@RequestParam Long productId, HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
+        Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
 
         // 非空判断
         if (productId > -1) {
             // 获取商品信息
             Product product = productService.getProductByProductId(productId);
+            // 获取商品列表信息。这一步本来应该原子化，前端写得不好，一个接口想请求两个参数。因此加上了。
+            List<ProductCategory> productCategoryList = productCategoryService.getProductCategoryList(currentShop.getShopId());
             modelMap.put("success", true);
             modelMap.put("product", product);
+            modelMap.put("productCategoryList", productCategoryList);
+            return modelMap;
         } else {
             modelMap.put("success", false);
             modelMap.put("errMsg", "empty productId");
+            return modelMap;
         }
-        return modelMap;
     }
 
     /**
@@ -152,19 +160,19 @@ public class ProductManagementController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/modifyProduct", method = RequestMethod.POST)
+    @RequestMapping(value = "/modifyproduct", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> modifyProduct(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
 
-        // 是商品编辑的时候调用还是上下架操作的时候调用
-        // 若为前者则进行验证码判断，后者则跳过验证码判断
-        boolean statusChange = HttpServletRequestUtil.getBoolean(request, "statusChange");
-        if (!statusChange && !CodeUtil.checkVerifyCodeFromHttpServletRequest(request)) {
-            modelMap.put("success", false);
-            modelMap.put("errMsg", "输入了错误的验证码");
-            return modelMap;
-        }
+        // // 是商品编辑的时候调用还是上下架操作的时候调用
+        // // 若为前者则进行验证码判断，后者则跳过验证码判断
+        // boolean statusChange = HttpServletRequestUtil.getBoolean(request, "statusChange");
+        // if (!statusChange && !CodeUtil.checkVerifyCodeFromHttpServletRequest(request)) {
+        //     modelMap.put("success", false);
+        //     modelMap.put("errMsg", "输入了错误的验证码");
+        //     return modelMap;
+        // }
 
         // 接收前端参数变量的初始化，包括商品，缩略图，详情图实体类
         ObjectMapper mapper = new ObjectMapper();
@@ -217,8 +225,9 @@ public class ProductManagementController {
             try {
                 // 从session中获取当前店铺的Id并赋值给product，减少对前端数据的依赖
                 Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
-                Shop shop = new Shop();
-                shop.setShopId(currentShop.getShopId());
+                // Shop shop = new Shop();
+                // shop.setShopId(currentShop.getShopId());
+                product.setShop(currentShop);
                 // 开始进行商品信息变更操作
                 ProductExecution productExecution = productService.updateProduct(product, thumbnail, productImgList);
                 if (productExecution.getState() == ProductStateEnum.SUCCESS.getState()) {
@@ -283,6 +292,7 @@ public class ProductManagementController {
         Product productCondition = new Product();
         Shop shop = new Shop();
         shop.setShopId(shopId);
+        productCondition.setShop(shop);
         // 若有某项条件也要整合进去
         if (productCategoryId != -1L) {
             ProductCategory productCategory = new ProductCategory();

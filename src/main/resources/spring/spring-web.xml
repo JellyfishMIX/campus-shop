@@ -58,5 +58,12 @@
             <bean id="ShopPermissionInterceptor" class="com.imooc.o2o.interceptor.shopadmin.ShopPermissionInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <!--6.接收图片-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760" />
+        <property name="maxInMemorySize" value="40960" />
+    </bean>
 </beans>
 

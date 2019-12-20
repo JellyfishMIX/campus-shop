@@ -90,12 +90,13 @@ public class ProductDaoTest extends BaseTest {
         ProductCategory productCategory = new ProductCategory();
         Shop shop = new Shop();
 
-        product.setProductId(1L);
-        product.setProductName("可乐");
+        product.setProductId(5L);
+        // product.setProductName("可乐");
         shop.setShopId(2L);
-        productCategory.setProductCategoryId(1L);
+        // productCategory.setProductCategoryId(1L);
         product.setShop(shop);
-        product.setProductCategory(productCategory);
+        // product.setProductCategory(productCategory);
+        product.setEnableStatus(0);
 
         // 修改productId为1的商品的名称
         // 以及商品类别并校验影响的行数是否为1
