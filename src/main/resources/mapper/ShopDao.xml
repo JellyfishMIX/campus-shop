@@ -16,17 +16,17 @@
         update tb_shop
 --         MySQL动态SQL
         <set>
-            <if test="shopName != null">shop_name=#{shopName},</if>
-            <if test="shopDesc != null">shop_desc=#{shopDesc},</if>
-            <if test="shopAddr != null">shop_addr=#{shopAddr},</if>
+            <if test="shopName != null">shop_name = #{shopName},</if>
+            <if test="shopDesc != null">shop_desc = #{shopDesc},</if>
+            <if test="shopAddr != null">shop_addr = #{shopAddr},</if>
             <if test="phone != null">phone=#{phone},</if>
-            <if test="shopImg != null">shop_img=#{shopImg},</if>
-            <if test="priority != null">priority=#{priority},</if>
-            <if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
-            <if test="enableStatus != null">enable_status=#{enableStatus},</if>
-            <if test="advice != null">advice=#{advice},</if>
-            <if test="area != null">area_id=#{area.areaId},</if>
-            <if test="shopCategory != null">shop_category_id=#{shopCategory.shopCategoryId}</if>
+            <if test="shopImg != null">shop_img = #{shopImg},</if>
+            <if test="priority != null">priority = #{priority},</if>
+            <if test="lastEditTime != null">last_edit_time = #{lastEditTime},</if>
+            <if test="enableStatus != null">enable_status = #{enableStatus},</if>
+            <if test="advice != null">advice = #{advice},</if>
+            <if test="area != null">area_id = #{area.areaId},</if>
+            <if test="shopCategory != null">shop_category_id = #{shopCategory.shopCategoryId}</if>
         </set>
         where shop_id=#{shopId}
     </update>
@@ -36,6 +36,7 @@
         <id  property="shopId" column="shop_id" />
         <result property="shopName" column="shop_name" />
         <result property="shopDesc" column="shop_desc" />
+        <result property="shopAddr" column="shop_addr" />
         <result property="phone" column="phone"  />
         <result property="shopImg" column="shop_img" />
         <result property="priority" column="priority" />
@@ -80,11 +81,11 @@
         tb_area a,
         tb_shop_category sc
         where
-        s.area_id=a.area_id
+        s.area_id = a.area_id
         and
-        s.shop_category_id=sc.shop_category_id
+        s.shop_category_id = sc.shop_category_id
         and
-        s.shop_id=#{shopId}
+        s.shop_id = #{shopId}
     </select>
 
     <!--获取店铺列表-->

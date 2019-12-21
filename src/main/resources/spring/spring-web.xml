@@ -52,9 +52,9 @@
         </mvc:interceptor>
         <!-- 校验是否对该店铺有操作权限的拦截器-->
         <mvc:interceptor>
-            <mvc:mapping path="/api/shopadmin/shopoperation" />
-            <mvc:mapping path="/api/shopadmin/productmanagement" />
-            <mvc:mapping path="/api/shopadmin/productcategorymanagement" />
+            <mvc:mapping path="/shopadmin/shopoperation" />
+            <mvc:mapping path="/shopadmin/productmanagement" />
+            <mvc:mapping path="/shopadmin/productcategorymanagement" />
             <bean id="ShopPermissionInterceptor" class="com.imooc.o2o.interceptor.shopadmin.ShopPermissionInterceptor" />
         </mvc:interceptor>
     </mvc:interceptors>

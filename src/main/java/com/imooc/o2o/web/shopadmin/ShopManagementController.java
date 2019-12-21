@@ -82,7 +82,7 @@ public class ShopManagementController {
         try {
             shop = mapper.readValue(shopStr, Shop.class);   // 把shopStr转换成shop实体类
         } catch (Exception e) {
-            modelMap.put("success:", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", e.getMessage());
             return modelMap;
         }
@@ -94,7 +94,7 @@ public class ShopManagementController {
             MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;    // 强制类型转换
             shopImg = (CommonsMultipartFile) multipartHttpServletRequest.getFile("shopImg");
         } else {
-            modelMap.put("success:", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", "上传图片不能为空");
             return modelMap;
         }
@@ -106,7 +106,7 @@ public class ShopManagementController {
             ShopExecution shopExecution;
 
             try {
-                ImageHolder imageHolder = null;
+                ImageHolder imageHolder = new ImageHolder();
                 imageHolder.setImage(shopImg.getInputStream());
                 imageHolder.setImageName(shopImg.getOriginalFilename());
                 shopExecution = shopService.addShop(shop, imageHolder);
@@ -130,7 +130,7 @@ public class ShopManagementController {
             }
             return modelMap;
         } else {
-            modelMap.put("success:", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", "店铺信息为空，或店铺无图片");
             return modelMap;
         }
@@ -149,16 +149,18 @@ public class ShopManagementController {
         if (shopId > -1) {
             try {
                 Shop shop = shopService.getShopByShopId(shopId);
-                modelMap.put("success: ", true);
+                List<Area> areaList = areaService.getAreaList();
+                modelMap.put("success", true);
                 modelMap.put("shop", shop);
+                modelMap.put("areaList", areaList);
                 return modelMap;
             } catch (Exception e) {
-                modelMap.put("success: ", false);
+                modelMap.put("success", false);
                 modelMap.put("errMsg", e.toString());
                 return modelMap;
             }
         } else {
-            modelMap.put("success: ", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", "empty shopId");
             return modelMap;
         }
@@ -169,7 +171,7 @@ public class ShopManagementController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/modifyShop", method = RequestMethod.POST)
+    @RequestMapping(value = "/modifyshop", method = RequestMethod.POST)
     @ResponseBody
     private Map<String, Object> modifyShop(HttpServletRequest request) {
         Map<String, Object> modelMap = new HashMap<>();
@@ -180,8 +182,12 @@ public class ShopManagementController {
         Shop shop;
         try {
             shop = mapper.readValue(shopStr, Shop.class);   // 把shopStr转换成shop实体类
+            shop.setShopName(new String(shop.getShopName().getBytes("8859_1"), "utf8"));
+            shop.setShopDesc(new String(shop.getShopDesc().getBytes("8859_1"), "utf8"));
+            shop.setShopAddr(new String(shop.getShopAddr().getBytes("8859_1"), "utf8"));
+            shop.setPhone(new String(shop.getPhone().getBytes("8859_1"), "utf8"));
         } catch (Exception e) {
-            modelMap.put("success:", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", e.getMessage());
             return modelMap;
         }
@@ -202,7 +208,7 @@ public class ShopManagementController {
             ShopExecution shopExecution;
 
             try {
-                ImageHolder imageHolder = null;
+                ImageHolder imageHolder = new ImageHolder();
                 if (shopImg == null) {
                     imageHolder.setImageName(null);
                     imageHolder.setImage(null);
@@ -225,7 +231,7 @@ public class ShopManagementController {
             }
             return modelMap;
         } else {
-            modelMap.put("success:", false);
+            modelMap.put("success", false);
             modelMap.put("errMsg", "缺少店铺id");
             return modelMap;
         }

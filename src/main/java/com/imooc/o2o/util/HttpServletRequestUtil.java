@@ -43,7 +43,7 @@ public class HttpServletRequestUtil {
 
     public static String getString(HttpServletRequest request, String key) {
         try {
-            String keyStr = request.getParameter((key));
+            String keyStr = request.getParameter(key);
             if (keyStr != null) {
                 keyStr = keyStr.trim(); // 如果keyStr不为空，那么就去掉两侧的空格
             }

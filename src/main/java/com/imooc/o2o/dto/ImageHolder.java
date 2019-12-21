@@ -6,6 +6,11 @@ public class ImageHolder {
     private String imageName;
     private InputStream image;
 
+    // 默认构造函数
+    public ImageHolder() {
+
+    }
+
     public ImageHolder(String imageName, InputStream image) {
         this.imageName = imageName;
         this.image = image;

@@ -53,7 +53,7 @@ public class ProductManagementController {
         Product product;
         String productStr = HttpServletRequestUtil.getString(request, "productStr");
         MultipartHttpServletRequest multipartHttpServletRequest;
-        ImageHolder thumbnail;
+        ImageHolder thumbnail = null;
         List<ImageHolder> productImgList = new ArrayList<ImageHolder>();
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
 
@@ -64,7 +64,9 @@ public class ProductManagementController {
                 multipartHttpServletRequest = (MultipartHttpServletRequest) request;
                 // 取出缩略图并构建ImageHolder对象
                 CommonsMultipartFile thumbnailFile = (CommonsMultipartFile) multipartHttpServletRequest.getFile("thumnail");
-                thumbnail = new ImageHolder(thumbnailFile.getOriginalFilename(), thumbnailFile.getInputStream());
+                if (thumbnailFile != null) {
+                    thumbnail = new ImageHolder(thumbnailFile.getOriginalFilename(), thumbnailFile.getInputStream());
+                }
                 // 取出详情图列表，并构建List<ImageHolder>列表对象，最多支持六张图片上传
                 for (int i=0; i<IMAGE_MAX_COUNT; i++) {
                     CommonsMultipartFile productImgFile = (CommonsMultipartFile) multipartHttpServletRequest.getFile("productImg" + i);
@@ -91,13 +93,22 @@ public class ProductManagementController {
         // 取出product参数
         try {
             // 尝试获取前端传过来的表单String流并将其转换成Product实体类
-            product = mapper.readValue(productStr, Product.class);
+            if (productStr != null) {
+                product = mapper.readValue(productStr, Product.class);
+                product.setProductName(new String(product.getProductName().getBytes("8859_1"), "utf8"));
+                product.setProductDesc(new String(product.getProductDesc().getBytes("8859_1"), "utf8"));
+            } else {
+                modelMap.put("success", false);
+                modelMap.put("errMsg", "productStr is null");
+                return modelMap;
+            }
         } catch (Exception e) {
             modelMap.put("success", false);
             modelMap.put("errMsg", e.toString());
             return modelMap;
         }
 
+        // TODO 测试图片上传
         // 若product信息，缩略图以及详情图列表非空，则开始进行商品添加操作
         if (product != null && thumbnail != null && productImgList.size() > 0) {
             try {
