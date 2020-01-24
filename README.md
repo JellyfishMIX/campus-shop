@@ -11,3 +11,7 @@ Dependencies can be seen in the pom.xml
 ## Database
 
 MySQL@8.0.17
+
+## Server
+
+阿里云ECS--CentOS@7.3
